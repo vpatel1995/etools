@@ -3,23 +3,42 @@
 {% block title %}Send Email{% endblock %}
 
 {% block content %}
-    <div style="margin: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-        <h2>Email Templator</h2>
-        <label for="email-template">Select Template:</label>
-        <select id="email-template" onchange="updateTemplateAndSubject()">
-            <option value="1" selected>Email Template 1</option>
-            <option value="2">Email Template 2</option>
-        </select>
-        <div style="margin-top: 10px;">
-            <label for="email-subject">Email Subject:</label>
-            <input type="text" id="email-subject" value="Subject 1">
-        </div>
-        <div id="template-preview" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;">
-            <!-- Email templte content -->
-        </div>
-        {% csrf_token %}
-        <button onclick="sendEmail()">Send Email</button>
+<div style="margin: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+    <h2>Email Templator</h2>
+    
+    <label for="email-template">Select Template:</label>
+    <select id="email-template" onchange="updateTemplateAndSubject()">
+        <option value="1" selected>Email Template 1</option>
+        <option value="2">Email Template 2</option>
+    </select>
+
+    <div style="margin-top: 10px;">
+        <label for="email-subject">Email Subject:</label>
+        <input type="text" id="email-subject" value="Subject 1">
     </div>
+
+    <div style="margin-top: 10px;">
+        <label for="email-to">To:</label>
+        <input type="email" id="email-to" placeholder="Recipient's email">
+    </div>
+
+    <div style="margin-top: 10px;">
+        <label for="email-from">From:</label>
+        <input type="email" id="email-from" placeholder="Your email">
+    </div>
+
+    <div style="margin-top: 10px;">
+        <label for="email-cc">CC:</label>
+        <input type="email" id="email-cc" placeholder="CC email">
+    </div>
+
+    <div id="template-preview" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;">
+        <!-- Email template content -->
+    </div>
+
+    {% csrf_token %}
+    <button onclick="sendEmail()">Send Email</button>
+</div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -45,18 +64,22 @@
         function sendEmail() {
             var templateId = document.getElementById("email-template").value;
             var subject = document.getElementById("email-subject").value;
+            var toEmail = document.getElementById("email-to").value;
+            var fromEmail = document.getElementById("email-from").value;
+            var ccEmail = document.getElementById("email-cc").value;
             var templateContent = document.getElementById("template-preview").innerHTML;
 
             $.ajax({
                 url: '/send_email/',
                 type: 'post',
-                headers: {
-                    'X-CSRFToken': getCSRF('csrftoken')
-                },
+                headers: {'X-CSRFToken': getCSRF('csrftoken')},
                 data: JSON.stringify({
                     'subject': subject,
                     'template_id': templateId,
-                    'template_content': templateContent
+                    'template_content': templateContent,
+                    'to_email': toEmail,
+                    'from_email': fromEmail,
+                    'cc_email': ccEmail
                 }),
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
