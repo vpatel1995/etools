@@ -55,10 +55,23 @@
         background-color: #fff;
     }
 
-    /* Style for the dynamic fields container */
+    /* Container for dynamic fields and template options header */
     #dynamic-fields-container {
         flex: 1;
-        padding-left: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Header for the dynamic fields container */
+    .dynamic-fields-header {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    /* Container for the dynamic input fields */
+    .dynamic-fields-content {
+        flex: 1; /* This makes it take up the remaining space */
     }
 
     /* Style for buttons */
@@ -117,8 +130,11 @@
         </div>
 
         <!-- Right side container for dynamic fields -->
-        <div id="dynamic-fields-container" style="flex: 1;">
-            <!-- Dynamic fields will be added here -->
+        <div id="dynamic-fields-container">
+            <div class="dynamic-fields-header">Template Options</div>
+            <div class="dynamic-fields-content">
+                <!-- Dynamic fields will be added here -->
+            </div>
         </div>
     </div>
 </div>
