@@ -24,7 +24,7 @@ def load_email_template(template_id):
         return file.read()
 
 def home(request):
-    return render(request, 'home/home.html')
+    return render(request, os.path.join(settings.BASE_DIR,'home', 'home.html'))
 
 def send_email_view(request):
     if request.method == 'POST':
