@@ -4,6 +4,11 @@ import boto3
 from botocore.exceptions import ClientError
 import json
 
+def load_email_template(template_id):
+    template_path = f"email_templates/template{template_id}.txt"
+    with open(template_path, 'r') as file:
+        return file.read()
+
 def home(request):
     return render(request, 'home/home.html')
 
@@ -12,7 +17,7 @@ def send_email_view(request):
         # Parse the received JSON data
         data = json.loads(request.body)
         template_id = data.get('template_id')
-        template_content = data.get('template_content')
+        template_content = load_email_template(template_id)
 
 
         # AWS SES Configuration

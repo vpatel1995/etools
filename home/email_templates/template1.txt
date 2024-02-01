@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .header {
+            font-size: 24px;
+            color: #333;
+        }
+        .content {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">This is a test email</div>
+        <div class="content">
+            This is a sample email template. You can customize it as per your requirements.
+            <br><br>
+            Thank you for choosing our service.
+        </div>
+    </div>
+</body>
+</html>
