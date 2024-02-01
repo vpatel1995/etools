@@ -4,50 +4,51 @@
 
 {% block content %}
 <div style="display: flex; margin: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-    <!-- Left side container for existing form elements -->
-    <div style="flex: 1; margin-right: 20px;">
-        <h2>Email Templator</h2>
+    <!-- Container for existing form elements and dynamic fields -->
+    <div style="display: flex; width: 100%;">
+        <!-- Left side container for existing form elements -->
+        <div style="flex: 1; margin-right: 20px;">
+            <h2>Email Templator</h2>
 
-        <label for="email-template">Select Template:</label>
-        <select id="email-template" onchange="updateTemplateAndSubject()">
-            <option value="1" selected>Email Template 1</option>
-            <option value="2">Email Template 2</option>
-        </select>
+            <label for="email-template">Select Template:</label>
+            <select id="email-template" onchange="updateTemplateAndSubject()">
+                <option value="1" selected>Email Template 1</option>
+                <option value="2">Email Template 2</option>
+            </select>
 
-        <div style="margin-top: 10px;">
-            <label for="email-subject">Email Subject:</label>
-            <input type="text" id="email-subject" value="Escalation Email">
+            <div style="margin-top: 10px;">
+                <label for="email-subject">Email Subject:</label>
+                <input type="text" id="email-subject" value="Escalation Email">
+            </div>
+
+            <div style="margin-top: 10px;">
+                <label for="email-to">To:</label>
+                <input type="email" id="email-to" value="patelv2895@gmail.com" placeholder="Recipient's email">
+            </div>
+
+            <div style="margin-top: 10px;">
+                <label for="email-from">From:</label>
+                <input type="email" id="email-from" value="patelv2895@gmail.com" placeholder="Your email">
+            </div>
+
+            <div style="margin-top: 10px;">
+                <label for="email-cc">CC:</label>
+                <input type="email" id="email-cc" placeholder="CC email">
+            </div>
+
+            <div id="template-preview" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;">
+                <!-- Email template content -->
+            </div>
+
+            {% csrf_token %}
+            <button onclick="sendEmail()">Send Email</button>
         </div>
 
-        <div style="margin-top: 10px;">
-            <label for="email-to">To:</label>
-            <input type="email" id="email-to" value="patelv2895@gmail.com" placeholder="Recipient's email">
+        <!-- Right side container for dynamic fields -->
+        <div id="dynamic-fields-container" style="flex: 1;">
+            <!-- Dynamic fields will be added here -->
         </div>
-
-        <div style="margin-top: 10px;">
-            <label for="email-from">From:</label>
-            <input type="email" id="email-from" value="patelv2895@gmail.com" placeholder="Your email">
-        </div>
-
-        <div style="margin-top: 10px;">
-            <label for="email-cc">CC:</label>
-            <input type="email" id="email-cc" placeholder="CC email">
-        </div>
-
-        <div id="template-preview" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;">
-        <!-- Email template content -->
-        </div>
-
-        {% csrf_token %}
-        <button onclick="sendEmail()">Send Email</button>
     </div>
-    </div>
-
-    <!-- Right side container for dynamic fields -->
-    <div id="dynamic-fields-container" style="flex: 1;">
-        <!-- Dynamic fields will be added here -->
-    </div>
-
 </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -76,7 +77,8 @@
             // Example regex to find placeholders like {{name}}
             const placeholderRegex = /\{\{(\w+)\}\}/g;
             let match;
-            let inputFieldsContainer = document.createElement('div');
+            let inputFieldsContainer = document.getElementById('dynamic-fields-container'); // Corrected the ID here
+            inputFieldsContainer.innerHTML = ''; // Clear previous fields
 
             while ((match = placeholderRegex.exec(templateContent)) !== null) {
                 let inputField = createInputField(match[1]);
