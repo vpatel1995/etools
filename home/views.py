@@ -3,10 +3,16 @@ from django.http import JsonResponse
 import boto3
 from botocore.exceptions import ClientError
 import json
+from django.conf import settings
+import os
+
 
 def get_template_content(request, template_id):
     try:
-        with open(f'email_templates/template{template_id}.txt', 'r') as file:
+        # Construct the absolute file path
+        file_path = os.path.join(settings.BASE_DIR, 'etools', 'home', 'email_templates', f'template{template_id}.txt')
+        
+        with open(file_path, 'r') as file:
             content = file.read()
         return JsonResponse({'content': content})
     except FileNotFoundError:
