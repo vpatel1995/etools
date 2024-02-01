@@ -3,15 +3,42 @@
 {% block title %}Send Email{% endblock %}
 
 {% block content %}
+    <div style="margin: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+        <h2>Email Templator</h2>
+        <label for="email-template">Select Template:</label>
+        <select id="email-template" onchange="updateTemplate()">
+            <option value="1">Email Template 1</option>
+            <option value="2">Email Template 2</option>
+        </select>
+        <div id="template-preview" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;">
+            <!-- Template preview will be shown here -->
+        </div>
+        {% csrf_token %}
+        <button onclick="sendEmail()">Send Email</button>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+        function updateTemplate() {
+            var templateId = document.getElementById("email-template").value;
+            var templateContent = templateId === "1" ? "Content of Email Template 1" : "Content of Email Template 2";
+            document.getElementById("template-preview").innerText = templateContent;
+        }
         function sendEmail() {
+            var templateId = document.getElementById("email-template").value;
+            var templateContent = templateId === "1" ? "Content of Email Template 1" : "Content of Email Template 2";
+
             $.ajax({
                 url: '/send_email/',
                 type: 'post',
                 headers: {
                     'X-CSRFToken': getCookie('csrftoken')
                 },
+                data: JSON.stringify({
+                    'template_id': templateId,
+                    'template_content': templateContent
+                }),
+                contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 success: function(data) {
                     alert(data.message);
@@ -38,9 +65,5 @@
             return cookieValue;
         }
     </script>
-
-    <!-- CSRF token for AJAX POST -->
-    {% csrf_token %}
-    <button onclick="sendEmail()">Send Email</button>
 {% endblock %}
 
