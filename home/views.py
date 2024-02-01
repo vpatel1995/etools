@@ -35,6 +35,15 @@ def send_email_view(request):
         from_email = data.get('from_email')
         cc_email = data.get('cc_email')
         subject = data.get('subject')
+
+        # Assuming dynamic fields are sent as a dictionary in 'dynamic_fields'
+        dynamic_fields = data.get('dynamic_fields', {})
+
+        # Replace placeholders in the template content
+        for key, value in dynamic_fields.items():
+            placeholder = f"{{{{{key}}}}}"  # Format: {{key}}
+            template_content = template_content.replace(placeholder, value)
+
         body_html = "<html><head></head><body>" + template_content + "</body></html>"
 
         # AWS SES Configuration
