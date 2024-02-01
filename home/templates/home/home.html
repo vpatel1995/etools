@@ -6,10 +6,14 @@
     <div style="margin: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
         <h2>Email Templator</h2>
         <label for="email-template">Select Template:</label>
-        <select id="email-template" onchange="updateTemplate()">
+        <select id="email-template" onchange="updateTemplateAndSubject()">
             <option value="1" selected>Email Template 1</option>
             <option value="2">Email Template 2</option>
         </select>
+        <div style="margin-top: 10px;">
+            <label for="email-subject">Email Subject:</label>
+            <input type="text" id="email-subject" value="Subject 1">
+        </div>
         <div id="template-preview" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;">
             <!-- Template preview will be shown here -->
         </div>
@@ -19,13 +23,18 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        function updateTemplate() {
+        function updateTemplateAndSubject() {
             var templateId = document.getElementById("email-template").value;
             var templateContent = templateId === "1" ? "Content of Email Template 1" : "Content of Email Template 2";
+            var subject = templateId === "1" ? "Subject 1" : "Subject 2";
+            
             document.getElementById("template-preview").innerText = templateContent;
+            document.getElementById("email-subject").value = subject;
         }
+
         function sendEmail() {
             var templateId = document.getElementById("email-template").value;
+            var subject = document.getElementById("email-subject").value;
             var templateContent = templateId === "1" ? "Content of Email Template 1" : "Content of Email Template 2";
 
             $.ajax({
@@ -35,6 +44,7 @@
                     'X-CSRFToken': getCSRF('csrftoken')
                 },
                 data: JSON.stringify({
+                    'subject': subject,
                     'template_id': templateId,
                     'template_content': templateContent
                 }),
