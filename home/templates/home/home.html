@@ -52,6 +52,7 @@
                 .then(data => {
                     if (data.content) {
                         document.getElementById("template-preview").innerHTML = data.content;
+                        generateInputFields(data.content);
                     } else {
                         alert('Template not found');
                     }
@@ -59,6 +60,37 @@
                 .catch(error => {
                     alert('Error fetching template: ' + error);
                 });
+        }
+
+        function generateInputFields(templateContent) {
+            // Example regex to find placeholders like {{name}}
+            const placeholderRegex = /\{\{(\w+)\}\}/g;
+            let match;
+            let inputFieldsContainer = document.createElement('div');
+
+            while ((match = placeholderRegex.exec(templateContent)) !== null) {
+                let inputField = createInputField(match[1]);
+                inputFieldsContainer.appendChild(inputField);
+            }
+
+            // Append this container next to your existing form elements
+            let formContainer = document.getElementById('your-form-container-id'); // Add this ID to your form container in HTML
+            formContainer.appendChild(inputFieldsContainer);
+        }
+
+        function createInputField(fieldName) {
+            let container = document.createElement('div');
+            let label = document.createElement('label');
+            label.innerHTML = fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
+            let input = document.createElement('input');
+            input.type = 'text';
+            input.id = fieldName;
+            input.name = fieldName;
+
+            container.appendChild(label);
+            container.appendChild(input);
+
+            return container;
         }
 
         function sendEmail() {
