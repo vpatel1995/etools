@@ -20,6 +20,24 @@
     .form-section {
         flex: 1;
         margin-right: 20px;
+        padding-top: 20px; /* Add padding to the top */
+    }
+
+    /* Style for labels and inputs within the form-section */
+    .form-section label, 
+    .form-section input[type="text"], 
+    .form-section input[type="email"], 
+    .form-section select {
+        margin-top: 10px; /* Adjust the top margin */
+        margin-bottom: 10px; /* Adjust the bottom margin */
+    }
+
+    /* Adjust the first label and input to have no top margin for alignment */
+    .form-section label:first-child,
+    .form-section input[type="text"]:first-child,
+    .form-section input[type="email"]:first-child,
+    .form-section select:first-child {
+        margin-top: 0;
     }
 
     /* Style for labels */
