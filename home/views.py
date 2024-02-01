@@ -14,6 +14,7 @@ def send_email_view(request):
         template_id = data.get('template_id')
         template_content = data.get('template_content')
 
+
         # AWS SES Configuration
         aws_access_key_id = 'AKIASD7G5KU2SHEC4B52'
         aws_secret_access_key = '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'
@@ -21,7 +22,7 @@ def send_email_view(request):
 
         sender = "patelv2895@gmail.com"
         recipient = "patelv2895@gmail.com"
-        subject = "Email Template " + template_id
+        subject = data.get('subject')
         body_html = "<html><head></head><body>" + template_content + "</body></html>"
 
         # Create a new SES client
