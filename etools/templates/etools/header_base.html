@@ -3,13 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Your Site Title{% endblock %}</title>
-    <!-- Add any common CSS/JS here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #f8f8f8;
+            padding: 10px 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-title {
+            margin: 0;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <!-- Your header content here -->
-        <h1>Welcome to My Site</h1>
-        <!-- Add more header elements as needed -->
+        <h1 class="header-title">eTools</h1>
+        <div class="dropdown">
+            <span>Shortcuts</span>
+            <div class="dropdown-content">
+                <a href="https://cityofchicago.service-now.com">Option 1</a>
+                <a href="https://www.google.com">Option 2</a>
+            </div>
+        </div>
     </header>
 
     {% block content %}
@@ -17,4 +66,3 @@
     {% endblock %}
 </body>
 </html>
-
