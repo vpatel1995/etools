@@ -7,7 +7,7 @@
         <h2>Email Templator</h2>
         <label for="email-template">Select Template:</label>
         <select id="email-template" onchange="updateTemplate()">
-            <option value="1">Email Template 1</option>
+            <option value="1" selected>Email Template 1</option>
             <option value="2">Email Template 2</option>
         </select>
         <div id="template-preview" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;">
@@ -32,7 +32,7 @@
                 url: '/send_email/',
                 type: 'post',
                 headers: {
-                    'X-CSRFToken': getCookie('csrftoken')
+                    'X-CSRFToken': getCSRF('csrftoken')
                 },
                 data: JSON.stringify({
                     'template_id': templateId,
@@ -49,8 +49,7 @@
             });
         }
 
-        // Function to get the CSRF token value
-        function getCookie(name) {
+        function getCSRF(name) {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
                 const cookies = document.cookie.split(';');
@@ -64,6 +63,10 @@
             }
             return cookieValue;
         }
+        // Initialize the template display on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTemplate();
+        }, false);
     </script>
 {% endblock %}
 
