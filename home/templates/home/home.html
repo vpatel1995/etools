@@ -164,12 +164,12 @@
         // Example regex to find placeholders like {{name}}
         const placeholderRegex = /\{\{(\w+)\}\}/g;
         let match;
-        let inputFieldsContainer = document.getElementById('dynamic-fields-container'); // Corrected the ID here
-        inputFieldsContainer.innerHTML = ''; // Clear previous fields
+        let dynamicFieldsContent = document.querySelector('.dynamic-fields-content'); // Target the .dynamic-fields-content div
+        dynamicFieldsContent.innerHTML = ''; // Clear previous fields
 
         while ((match = placeholderRegex.exec(templateContent)) !== null) {
             let inputField = createInputField(match[1]);
-            inputFieldsContainer.appendChild(inputField);
+            dynamicFieldsContent.appendChild(inputField); // Append to .dynamic-fields-content
         }
     }
 
