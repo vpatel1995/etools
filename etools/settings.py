@@ -56,7 +56,7 @@ ROOT_URLCONF = 'etools.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'etools', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'etools', 'templates', 'etools')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
