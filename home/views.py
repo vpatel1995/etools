@@ -4,6 +4,14 @@ import boto3
 from botocore.exceptions import ClientError
 import json
 
+def get_template_content(request, template_id):
+    try:
+        with open(f'email_templates/template{template_id}.txt', 'r') as file:
+            content = file.read()
+        return JsonResponse({'content': content})
+    except FileNotFoundError:
+        return JsonResponse({'error': 'Template not found'}, status=404)
+
 def load_email_template(template_id):
     template_path = f"email_templates/template{template_id}.txt"
     with open(template_path, 'r') as file:
