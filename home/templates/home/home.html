@@ -16,61 +16,33 @@
         background-color: #f8f8f8;
     }
 
-    /* Container for form elements */
-    .form-section {
-        flex: 1;
-        margin-right: 20px;
-    }
-
-    /* Style for labels */
-    label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-
-    /* Style for inputs */
-    input[type="text"], input[type="email"] {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    /* Style for select dropdown */
-    select {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    /* Style for the email template preview section */
-    #template-preview {
-        margin-top: 20px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        background-color: #fff;
-    }
-
-    /* Container for dynamic fields and template options header */
-    #dynamic-fields-container {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .dynamic-fields-header, .email-templator-header {
+    /* Common style for both section headers */
+    .section-header {
         font-size: 1.2em;
         margin-bottom: 10px;
         font-weight: bold;
     }
 
-    /* Container for the dynamic input fields */
-    .dynamic-fields-content {
-        flex: 1; /* This makes it take up the remaining space */
+    /* Style for form elements and dynamic fields */
+    .form-section, .dynamic-fields-content {
+        flex: 1;
+        margin-right: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Style for labels and inputs */
+    label, input[type="text"], input[type="email"], select {
+        display: block;
+        margin-bottom: 10px;
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    label {
+        font-weight: bold;
     }
 
     /* Style for buttons */
@@ -86,55 +58,37 @@
     button:hover {
         background-color: #0056b3;
     }
+
+    /* Additional specific styles */
+    #template-preview {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
 </style>
+
 <div class="email-container">
-    <!-- Container for existing form elements and dynamic fields -->
-    <div style="display: flex; width: 100%;">
-        <!-- Left side container for existing form elements -->
-        <div class="form-section">
-            <div class="email-templator-header">Email Templator</div>
-
-            <label for="email-template">Select Template:</label>
-            <select id="email-template" onchange="updateTemplateAndSubject()">
-                <option value="1" selected>Email Template 1</option>
-                <option value="2">Email Template 2</option>
-            </select>
-
-            <div style="margin-top: 10px;">
-                <label for="email-subject">Email Subject:</label>
-                <input type="text" id="email-subject" value="Escalation Email">
-            </div>
-
-            <div style="margin-top: 10px;">
-                <label for="email-to">To:</label>
-                <input type="email" id="email-to" value="patelv2895@gmail.com" placeholder="Recipient's email">
-            </div>
-
-            <div style="margin-top: 10px;">
-                <label for="email-from">From:</label>
-                <input type="email" id="email-from" value="patelv2895@gmail.com" placeholder="Your email">
-            </div>
-
-            <div style="margin-top: 10px;">
-                <label for="email-cc">CC:</label>
-                <input type="email" id="email-cc" placeholder="CC email">
-            </div>
-
-            <div id="template-preview" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;">
-                <!-- Email template content -->
-            </div>
-
-            {% csrf_token %}
-            <button onclick="sendEmail()">Send Email</button>
+    <!-- Left side container for existing form elements -->
+    <div class="form-section">
+        <div class="section-header">Email Templator</div>
+        <label for="email-template">Select Template:</label>
+        <select id="email-template" onchange="updateTemplateAndSubject()">
+            <option value="1" selected>Email Template 1</option>
+            <option value="2">Email Template 2</option>
+        </select>
+        <!-- Additional form elements here -->
+        <div id="template-preview">
+            <!-- Email template content -->
         </div>
+        {% csrf_token %}
+        <button onclick="sendEmail()">Send Email</button>
+    </div>
 
-        <!-- Right side container for dynamic fields -->
-        <div id="dynamic-fields-container">
-            <div class="dynamic-fields-header">Template Options</div>
-            <div class="dynamic-fields-content">
-                <!-- Dynamic fields will be added here -->
-            </div>
-        </div>
+    <!-- Right side container for dynamic fields -->
+    <div class="dynamic-fields-content">
+        <div class="section-header">Template Options</div>
+        <!-- Dynamic fields will be added here -->
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
