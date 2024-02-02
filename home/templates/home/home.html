@@ -194,6 +194,18 @@
         });
     }
 
+    function getDynamicFieldValues() {
+    var dynamicFields = document.querySelectorAll('.dynamic-fields-content input[type="text"]');
+    var fieldValues = {};
+
+    dynamicFields.forEach(function(field) {
+        fieldValues[field.id] = field.value;
+    });
+
+    return fieldValues;
+}
+
+
     function getCSRF(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
