@@ -5,4 +5,4 @@ class DevTable(models.Model):
     value = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
-        db_table = 'dev_table
+        db_table = 'dev_table'
