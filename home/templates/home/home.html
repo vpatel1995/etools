@@ -57,7 +57,10 @@
         padding: 10px;
         border: 1px solid #ccc;
         background-color: #fff;
-        flex-grow: 2; /* Allows the preview to take more space */
+        height: auto; /* Adjust height based on content */
+        max-height: 500px; /* Example max height, adjust as needed */
+        overflow-y: auto; /* Allows scrolling inside the preview if content exceeds max height */
+        flex-grow: 0; /* Prevents it from growing more than content size */
     }
 
     button {
