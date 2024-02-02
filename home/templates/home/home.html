@@ -152,6 +152,9 @@
         input.id = fieldName;
         input.name = fieldName;
 
+        // Attach event listener to dynamically created input field
+        input.addEventListener('input', updatePreview);
+
         container.appendChild(label);
         container.appendChild(input);
 
@@ -213,9 +216,9 @@
         const dynamicFields = getDynamicFieldValues();
 
         let previewContent = `<p>Subject: ${subject}</p>
-                              <p>To: ${toEmail}</p>
-                              <p>From: ${fromEmail}</p>
-                              <p>CC: ${ccEmail}</p>`;
+                            <p>To: ${toEmail}</p>
+                            <p>From: ${fromEmail}</p>
+                            <p>CC: ${ccEmail}</p>`;
 
         for (const key in dynamicFields) {
             previewContent += `<p>${key.replace(/_/g, ' ')}: ${dynamicFields[key]}</p>`;
@@ -223,6 +226,7 @@
 
         document.getElementById('template-preview').innerHTML = previewContent;
     }
+
 
     // Attach event listeners to input fields
     document.getElementById('email-subject').addEventListener('input', updatePreview);
