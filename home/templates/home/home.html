@@ -293,24 +293,23 @@
     function toggleFormVisibility() {
         var isHidden = document.getElementById('hide-options').checked;
         var emailContainer = document.querySelector('.email-container');
-        var formElements = document.querySelectorAll('.form-group, #template-preview, #dynamic-fields-container');
+        var formInputs = document.querySelector('.form-inputs');
+        var dynamicFields = document.getElementById('dynamic-fields-container');
+        var templatePreview = document.getElementById('template-preview');
 
         // Apply the smaller width when checkbox is checked
         if (isHidden) {
             emailContainer.classList.add('small-container');
+            dynamicFields.style.display = 'none';
+            templatePreview.style.display = 'none';
         } else {
             emailContainer.classList.remove('small-container');
+            dynamicFields.style.display = 'block';
+            templatePreview.style.display = 'block';
         }
 
-        formElements.forEach(el => {
-            if (!el.classList.contains('toggle-options') && !el.classList.contains('select-template')) {
-                el.style.display = isHidden ? 'none' : 'flex';
-            }
-        });
-
-        // Always show the select template and send email button
-        document.querySelector('.form-section > .form-group.select-template').style.display = 'flex';
-        document.querySelector('.form-section > button').style.display = 'flex';
+        // Adjust the form inputs section as needed
+        formInputs.style.display = 'flex';
     }
 
     // Make sure to call this function to apply initial state
