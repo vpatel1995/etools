@@ -27,25 +27,22 @@
         flex-direction: column;
     }
 
-    input[type="text"], input[type="email"], select {
-        flex-grow: 1;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        max-width: 400px; /* Adjust this value as needed */
-    }
-
     .form-group {
         display: flex;
         align-items: center;
         margin-bottom: 10px;
-        flex-wrap: wrap; /* Ensures that elements wrap in smaller screens */
     }
 
     label {
         font-weight: bold;
         margin-right: 10px;
-        white-space: nowrap; /* Prevents the label from wrapping */
+    }
+
+    input[type="text"], input[type="email"], select {
+        flex-grow: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
     }
 
     #template-preview {
