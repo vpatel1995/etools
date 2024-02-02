@@ -103,6 +103,10 @@
         <button onclick="sendEmail()">Send Email</button>
     </div>
 
+    <div id="dynamic-fields-container">
+        <div class="section-header">Template Options</div>
+        <div class="dynamic-fields-content"></div>
+    </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -111,18 +115,51 @@
         var subject = templateId === "1" ? "Subject 1" : "Subject 2";
         document.getElementById("email-subject").value = subject;
 
-        // Fetch the HTML template file based on the selected template ID
-        fetch(`/get_template_content/${templateId}`) // Adjust the path as needed
-            .then(response => response.text())
+        fetch(`/get_template_content/${templateId}`)
+            .then(response => response.json())
             .then(data => {
-                document.getElementById("template-preview").innerHTML = data;
+                if (data.content) {
+                    document.getElementById("template-preview").innerHTML = data.content;
+                    generateInputFields(data.content);
+                } else {
+                    alert('Template not found');
+                }
             })
             .catch(error => {
                 alert('Error fetching template: ' + error);
             });
     }
 
+    function generateInputFields(templateContent) {
+        // Example regex to find placeholders like {{name}}
+        const placeholderRegex = /\{\{(\w+)\}\}/g;
+        let match;
+        let dynamicFieldsContent = document.querySelector('.dynamic-fields-content'); // Target the .dynamic-fields-content div
+        dynamicFieldsContent.innerHTML = ''; // Clear previous fields
 
+        while ((match = placeholderRegex.exec(templateContent)) !== null) {
+            let inputField = createInputField(match[1]);
+            dynamicFieldsContent.appendChild(inputField); // Append to .dynamic-fields-content
+        }
+    }
+
+    function createInputField(fieldName) {
+        let container = document.createElement('div');
+        let label = document.createElement('label');
+        label.innerHTML = fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
+        let input = document.createElement('input');
+        input.type = 'text';
+        input.id = fieldName;
+        input.name = fieldName;
+
+        // Attach event listener to dynamically created input field
+        input.addEventListener('input', updatePreview);
+
+        container.appendChild(label);
+        container.appendChild(input);
+
+        return container;
+    }
 
     function sendEmail() {
         console.log("sendEmail function called");
@@ -160,6 +197,16 @@
         });
     }
 
+    function getDynamicFieldValues() {
+        var dynamicFields = document.querySelectorAll('.dynamic-fields-content input[type="text"]');
+        var fieldValues = {};
+
+        dynamicFields.forEach(function(field) {
+            fieldValues[field.id] = field.value;
+        });
+
+        return fieldValues;
+    }
 
     function updatePreview() {
         const dynamicFields = getDynamicFieldValues();
