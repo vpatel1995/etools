@@ -27,30 +27,22 @@
         flex-direction: column;
     }
 
-    .form-group label {
-        font-weight: bold;
-        margin-right: 10px;
-        width: 150px; /* Fixed width for labels */
-        display: inline-block; /* Ensures the label takes up the full width */
-    }
-
-    .form-group input[type="text"],
-    .form-group input[type="email"],
-    .form-group select {
-        flex-grow: 1;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        width: 300px; /* Fixed width for input fields and select dropdown */
+    .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
     }
 
     label {
         font-weight: bold;
         margin-right: 10px;
+        white-space: nowrap; /* This will prevent labels from wrapping */
     }
 
     input[type="text"], input[type="email"], select {
-        flex-grow: 1;
+        flex-grow: 0; /* Change from 1 to 0 */
+        flex-shrink: 0; /* Prevent shrinking */
+        flex-basis: 200px; /* Set a fixed width */
         padding: 8px;
         border: 1px solid #ccc;
         border-radius: 4px;
