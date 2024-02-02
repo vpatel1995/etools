@@ -195,15 +195,40 @@
     }
 
     function getDynamicFieldValues() {
-    var dynamicFields = document.querySelectorAll('.dynamic-fields-content input[type="text"]');
-    var fieldValues = {};
+        var dynamicFields = document.querySelectorAll('.dynamic-fields-content input[type="text"]');
+        var fieldValues = {};
 
-    dynamicFields.forEach(function(field) {
-        fieldValues[field.id] = field.value;
-    });
+        dynamicFields.forEach(function(field) {
+            fieldValues[field.id] = field.value;
+        });
 
-    return fieldValues;
-}
+        return fieldValues;
+    }
+
+    function updatePreview() {
+        const subject = document.getElementById('email-subject').value;
+        const toEmail = document.getElementById('email-to').value;
+        const fromEmail = document.getElementById('email-from').value;
+        const ccEmail = document.getElementById('email-cc').value;
+        const dynamicFields = getDynamicFieldValues();
+
+        let previewContent = `<p>Subject: ${subject}</p>
+                              <p>To: ${toEmail}</p>
+                              <p>From: ${fromEmail}</p>
+                              <p>CC: ${ccEmail}</p>`;
+
+        for (const key in dynamicFields) {
+            previewContent += `<p>${key.replace(/_/g, ' ')}: ${dynamicFields[key]}</p>`;
+        }
+
+        document.getElementById('template-preview').innerHTML = previewContent;
+    }
+
+    // Attach event listeners to input fields
+    document.getElementById('email-subject').addEventListener('input', updatePreview);
+    document.getElementById('email-to').addEventListener('input', updatePreview);
+    document.getElementById('email-from').addEventListener('input', updatePreview);
+    document.getElementById('email-cc').addEventListener('input', updatePreview);
 
 
     function getCSRF(name) {
@@ -222,6 +247,7 @@
     }
     document.addEventListener('DOMContentLoaded', function() {
         updateTemplateAndSubject();
+        updatePreview();
     }, false);
 </script>
 {% endblock %}
