@@ -273,22 +273,18 @@
     // Function to toggle form visibility
     function toggleFormVisibility() {
         var isHidden = document.getElementById('hide-options').checked;
-        var formInputs = document.querySelector('.left-section');
-        var dynamicFields = document.getElementById('dynamic-fields-container');
-        var templatePreview = document.getElementById('template-preview');
+        var formElementsToHide = document.querySelectorAll('.left-section .form-group:not(.toggle-options):not(.select-template)');
 
         // Show or hide elements based on the checkbox state
-        if (isHidden) {
-            // Hide elements
-            formInputs.style.display = 'none';
-            dynamicFields.style.display = 'none';
-            templatePreview.style.display = 'none';
-        } else {
-            // Show elements
-            formInputs.style.display = 'flex';
-            dynamicFields.style.display = 'flex';
-            templatePreview.style.display = 'block';
-        }
+        formElementsToHide.forEach(function(el) {
+            if (isHidden) {
+                // Hide elements
+                el.style.display = 'none';
+            } else {
+                // Show elements
+                el.style.display = 'flex';
+            }
+        });
     }
 
     // Make sure to call this function to apply initial state
