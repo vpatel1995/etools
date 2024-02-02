@@ -65,13 +65,8 @@
         background-color: #0056b3;
     }
 
-    /* Additional style for smaller container */
     .small-container {
-        width: auto; /* Or any specific width you prefer */
-        min-width: 300px; /* Adjust as needed */
-        margin-top: 20px;
-        padding: 10px;
-        /* Any other styling adjustments for the smaller size */
+        max-width: 400px; /* Adjust the width as needed */
     }
 </style>
 <div class="email-container">
@@ -273,30 +268,32 @@
         document.getElementById('template-preview').innerHTML = templateContent;
     }
 
-    // Function to toggle form visibility based on checkbox
+    // Function to toggle form visibility
     function toggleFormVisibility() {
         var isHidden = document.getElementById('hide-options').checked;
-        var formElements = document.querySelectorAll('.form-group, #template-preview, #dynamic-fields-container');
         var emailContainer = document.querySelector('.email-container');
+        var formElements = document.querySelectorAll('.form-group, #template-preview, #dynamic-fields-container');
 
-        formElements.forEach(el => {
-            // Exclude the toggle-options and select-template form-group from being hidden
-            if (!el.classList.contains('toggle-options') && !el.classList.contains('select-template')) {
-                el.style.display = isHidden ? 'none' : 'flex';
-            }
-        });
-
-        // Toggle the size of the email container
+        // Apply the smaller width when checkbox is checked
         if (isHidden) {
             emailContainer.classList.add('small-container');
         } else {
             emailContainer.classList.remove('small-container');
         }
 
+        formElements.forEach(el => {
+            if (!el.classList.contains('toggle-options') && !el.classList.contains('select-template')) {
+                el.style.display = isHidden ? 'none' : 'flex';
+            }
+        });
+
         // Always show the select template and send email button
         document.querySelector('.form-section > .form-group.select-template').style.display = 'flex';
         document.querySelector('.form-section > button').style.display = 'flex';
     }
+
+    // Make sure to call this function to apply initial state
+    toggleFormVisibility();
 
     // Event listener for checkbox
     document.getElementById('hide-options').addEventListener('change', toggleFormVisibility);
