@@ -106,15 +106,18 @@
             <label for="email-cc">CC:</label>
             <input type="email" id="email-cc" placeholder="CC email">
         </div>
-        <div id="dynamic-fields-container">
-            <div class="section-header">Template Options</div>
-            <div class="dynamic-fields-content"></div>
-        </div>
 
         <div id="template-preview" contenteditable="true"></div>
 
         {% csrf_token %}
         <button onclick="sendEmail()">Send Email</button>
+    </div>
+
+    <div id="dynamic-fields-container">
+        <div class="form-group">
+            <div class="section-header">Template Options</div>
+            <div class="dynamic-fields-content"></div>
+        </div>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
