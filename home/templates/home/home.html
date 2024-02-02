@@ -274,17 +274,15 @@
     function toggleFormVisibility() {
         var isHidden = document.getElementById('hide-options').checked;
         var formElementsToHide = document.querySelectorAll('.left-section .form-group:not(.toggle-options):not(.select-template)');
+        var dynamicFields = document.getElementById('dynamic-fields-container');
+        var templatePreview = document.getElementById('template-preview');
 
         // Show or hide elements based on the checkbox state
         formElementsToHide.forEach(function(el) {
-            if (isHidden) {
-                // Hide elements
-                el.style.display = 'none';
-            } else {
-                // Show elements
-                el.style.display = 'flex';
-            }
+            el.style.display = isHidden ? 'none' : 'flex';
         });
+        dynamicFields.style.display = isHidden ? 'none' : 'block';
+        templatePreview.style.display = isHidden ? 'none' : 'block';
     }
 
     // Make sure to call this function to apply initial state
