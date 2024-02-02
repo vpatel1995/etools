@@ -1,3 +1,34 @@
-Ticket Number {{Ticket_Number}}
-Contact Name {{Contact_Name}}
-Contact Number {{Contact_Number}}
+<table style="width: 100%; border-collapse: collapse;">
+    <tr>
+        <td style="border: 1px solid black; padding: 5px;">Ticket Number:</td>
+        <td style="border: 1px solid black; padding: 5px;">{{Ticket_Number}}</td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 5px;">Contact Name:</td>
+        <td style="border: 1px solid black; padding: 5px;">{{Contact_Name}}</td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 5px;">Contact Number:</td>
+        <td style="border: 1px solid black; padding: 5px;">{{Contact_Number}}</td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 5px;">Contact Location:</td>
+        <td style="border: 1px solid black; padding: 5px;">{{Contact_Location}}</td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 5px;">Contact working hours:</td>
+        <td style="border: 1px solid black; padding: 5px;">N/A</td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 5px;">Alternate Contact Number:</td>
+        <td style="border: 1px solid black; padding: 5px;">N/A</td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 5px;">Application Affected:</td>
+        <td style="border: 1px solid black; padding: 5px;">{{Application_Affected}}</td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 5px;">Description of Problem:</td>
+        <td style="border: 1px solid black; padding: 5px;">{{Description_Of_Problem}}</td>
+    </tr>
+</table>
