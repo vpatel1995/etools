@@ -1,4 +1,8 @@
 <table style="width: 100%; border-collapse: collapse;">
+    <colgroup>
+        <col style="width: 30%;"> <!-- Adjust the percentage as needed -->
+        <col style="width: 70%;"> <!-- This will take the remaining width -->
+    </colgroup>
     <tr>
         <td style="border: 1px solid black; padding: 5px;">Ticket Number:</td>
         <td style="border: 1px solid black; padding: 5px;">{{Ticket_Number}}</td>
