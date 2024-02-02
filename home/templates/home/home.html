@@ -267,7 +267,10 @@
         var isDefaultSelected = document.getElementById('default-options').checked;
         var formElements = document.querySelectorAll('.form-group, #template-preview, #dynamic-fields-container');
         formElements.forEach(el => {
-            el.style.display = isDefaultSelected ? 'none' : 'flex';
+            // Exclude the first form-group (which contains the radio buttons) from being hidden
+            if (!el.classList.contains('radio-buttons')) {
+                el.style.display = isDefaultSelected ? 'none' : 'flex';
+            }
         });
         // Always show the select template and send email button
         document.querySelector('.form-section > .form-group:first-child').style.display = 'flex';
