@@ -112,11 +112,11 @@
             <div id="dynamic-fields-container">
                 <div class="dynamic-fields-content"></div>
             </div>
+            {% csrf_token %}
+            <button onclick="sendEmail()">Send Email</button>
         </div>
         <div class="right-section">
             <div id="template-preview" contenteditable="true"></div>
-            {% csrf_token %}
-            <button onclick="sendEmail()">Send Email</button>
         </div>
     </div>
 </div>
