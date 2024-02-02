@@ -66,38 +66,16 @@
     }
 </style>
 <div class="email-container">
-    <div class="form-section">
-        <div class="section-header">Email Templator</div>
+    <div class="section-header">Email Templator</div>
+    <div class="form-group">
+        <label for="email-template">Select Template:</label>
+        <select id="email-template" onchange="updateTemplateAndSubject()">
+            <option value="1" selected>Email Template 1</option>
+            <option value="2">Email Template 2</option>
+        </select>
+    </div>
 
-        <div class="form-group">
-            <label for="email-template">Select Template:</label>
-            <select id="email-template" onchange="updateTemplateAndSubject()">
-                <option value="1" selected>Email Template 1</option>
-                <option value="2">Email Template 2</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="email-subject">Email Subject:</label>
-            <input type="text" id="email-subject" value="Escalation Email">
-        </div>
-
-        <div class="form-group">
-            <label for="email-to">To:</label>
-            <input type="email" id="email-to" value="patelv2895@gmail.com" placeholder="Recipient's email">
-        </div>
-
-        <div class="form-group">
-            <label for="email-from">From:</label>
-            <input type="email" id="email-from" value="patelv2895@gmail.com" placeholder="Your email">
-        </div>
-
-        <div class="form-group">
-            <label for="email-cc">CC:</label>
-            <input type="email" id="email-cc" placeholder="CC email">
-        </div>
-
-        <div id="template-preview"></div>
+    <div id="template-preview" contenteditable="true"></div>
 
         {% csrf_token %}
         <button onclick="sendEmail()">Send Email</button>
@@ -112,18 +90,11 @@
 <script>
     function updateTemplateAndSubject() {
         var templateId = document.getElementById("email-template").value;
-        var subject = templateId === "1" ? "Subject 1" : "Subject 2";
-        document.getElementById("email-subject").value = subject;
-
-        fetch(`/get_template_content/${templateId}`)
-            .then(response => response.json())
+        // Fetch the HTML template based on the selected template ID
+        fetch(`/path_to_templates/template${templateId}.html`) // Adjust the path as needed
+            .then(response => response.text())
             .then(data => {
-                if (data.content) {
-                    document.getElementById("template-preview").innerHTML = data.content;
-                    generateInputFields(data.content);
-                } else {
-                    alert('Template not found');
-                }
+                document.getElementById("template-preview").innerHTML = data;
             })
             .catch(error => {
                 alert('Error fetching template: ' + error);
