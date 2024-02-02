@@ -69,6 +69,14 @@
     <div class="form-section">
         <div class="section-header">Email Templator</div>
 
+        <!-- Radio buttons for template selection -->
+        <div class="form-group">
+            <input type="radio" id="default-options" name="template-type" value="default" checked>
+            <label for="default-options">Default Options</label>
+            <input type="radio" id="customized-template" name="template-type" value="customized">
+            <label for="customized-template">Customized Template</label>
+        </div>
+
         <div class="form-group">
             <label for="email-template">Select Template:</label>
             <select id="email-template" onchange="updateTemplateAndSubject()">
@@ -254,6 +262,22 @@
         document.getElementById('template-preview').innerHTML = templateContent;
     }
 
+    // Function to toggle form visibility
+    function toggleFormVisibility() {
+        var isDefaultSelected = document.getElementById('default-options').checked;
+        var formElements = document.querySelectorAll('.form-group, #template-preview, #dynamic-fields-container');
+        formElements.forEach(el => {
+            el.style.display = isDefaultSelected ? 'none' : 'flex';
+        });
+        // Always show the select template and send email button
+        document.querySelector('.form-section > .form-group:first-child').style.display = 'flex';
+        document.querySelector('.form-section > button').style.display = 'flex';
+    }
+
+    // Event listeners for radio buttons
+    document.getElementById('default-options').addEventListener('change', toggleFormVisibility);
+    document.getElementById('customized-template').addEventListener('change', toggleFormVisibility);
+
 
     function getCSRF(name) {
         let cookieValue = null;
@@ -272,6 +296,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         updateTemplateAndSubject();
         updatePreview();
+        toggleFormVisibility();
     }, false);
 </script>
 {% endblock %}
