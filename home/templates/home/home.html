@@ -89,6 +89,30 @@
     .small-container {
         max-width: 300px; /* Adjust the width as needed */
     }
+
+    .send-email-button {
+        width: 33%; /* Set the width to a third of its container */
+        align-self: flex-start; /* Align the button to the start (left) of the container */
+    }
+
+    .dynamic-fields-content div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .dynamic-fields-content label {
+        font-weight: bold;
+        margin-right: 10px;
+        white-space: nowrap;
+    }
+
+    .dynamic-fields-content input[type="text"] {
+        flex-grow: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
 </style>
 <div class="email-container">
     <div class="form-section">
@@ -126,7 +150,7 @@
                 <div class="dynamic-fields-content"></div>
             </div>
             {% csrf_token %}
-            <button onclick="sendEmail()">Send Email</button>
+            <button onclick="sendEmail()" class="send-email-button">Send Email</button>
         </div>
         <div class="right-section">
             <div id="template-preview" contenteditable="true"></div>
