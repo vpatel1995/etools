@@ -127,7 +127,11 @@
             .then(response => response.json())
             .then(data => {
                 if (data.content) {
-                    document.getElementById("template-preview").innerHTML = data.content;
+                    // Replace placeholders with empty strings or default values
+                    let templateContent = data.content.replace(/\{\{(\w+)\}\}/g, function(match, p1){
+                        return ''; // Replace with default value if needed, else just an empty string
+                    });
+                    document.getElementById("template-preview").innerHTML = templateContent;
                     generateInputFields(data.content);
                 } else {
                     alert('Template not found');
