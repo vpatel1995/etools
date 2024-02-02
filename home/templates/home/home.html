@@ -64,6 +64,15 @@
     button:hover {
         background-color: #0056b3;
     }
+
+    /* Additional style for smaller container */
+    .small-container {
+        width: auto; /* Or any specific width you prefer */
+        min-width: 300px; /* Adjust as needed */
+        margin-top: 20px;
+        padding: 10px;
+        /* Any other styling adjustments for the smaller size */
+    }
 </style>
 <div class="email-container">
     <div class="form-section">
@@ -71,7 +80,7 @@
 
         <!-- Checkbox for toggling visibility of additional options -->
         <div class="form-group toggle-options">
-            <input type="checkbox" id="hide-options" name="hide-options">
+            <input type="checkbox" id="hide-options" name="hide-options" checked>
             <label for="hide-options">Hide Options</label>
         </div>
 
@@ -264,17 +273,25 @@
         document.getElementById('template-preview').innerHTML = templateContent;
     }
 
-    // Function to toggle form visibility
     // Function to toggle form visibility based on checkbox
     function toggleFormVisibility() {
         var isHidden = document.getElementById('hide-options').checked;
         var formElements = document.querySelectorAll('.form-group, #template-preview, #dynamic-fields-container');
+        var emailContainer = document.querySelector('.email-container');
+
         formElements.forEach(el => {
             // Exclude the toggle-options and select-template form-group from being hidden
             if (!el.classList.contains('toggle-options') && !el.classList.contains('select-template')) {
                 el.style.display = isHidden ? 'none' : 'flex';
             }
         });
+
+        // Toggle the size of the email container
+        if (isHidden) {
+            emailContainer.classList.add('small-container');
+        } else {
+            emailContainer.classList.remove('small-container');
+        }
 
         // Always show the select template and send email button
         document.querySelector('.form-section > .form-group.select-template').style.display = 'flex';
