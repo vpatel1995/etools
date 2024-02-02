@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_mysql',
     'home',
 ]
 
@@ -76,17 +75,17 @@ WSGI_APPLICATION = 'etools.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Standard Django MySQL backend
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dev_db',
         'USER': 'mysql_admin',
         'PASSWORD': 'Fighter1!',
-        'HOST': '3.17.160.233',  # MySQL server IP
+        'HOST': '3.17.160.233',
         'PORT': '3306',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
