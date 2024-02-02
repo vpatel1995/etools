@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'etools.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django_mysql',  # Update the engine
         'NAME': 'dev_db',
         'USER': 'mysql_admin',
         'PASSWORD': 'Fighter1!',
