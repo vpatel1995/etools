@@ -5,18 +5,13 @@
 {% block content %}
 <style>
     /* home.css */
-/* Additional CSS */
     .email-container {
         display: flex;
-        flex-wrap: wrap; /* Allow elements to wrap if needed */
-    }
-
-    .form-elements-wrapper {
-        flex: 1; /* Take available space */
-    }
-
-    #dynamic-fields-container {
-        flex-basis: 300px; /* Adjust the width of dynamic fields container */
+        margin: 20px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f8f8f8;
     }
 
     .section-header {
@@ -53,11 +48,26 @@
         border-radius: 4px;
     }
 
+    .email-content {
+        display: flex;
+        justify-content: space-between; /* Aligns children in a row */
+        width: 100%; /* Ensures full width usage */
+    }
+
+    .form-inputs {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 30%; /* Adjust as needed */
+        margin-right: 20px; /* Space between form inputs and dynamic fields */
+    }
+
+    #dynamic-fields-container {
+        flex-basis: 30%; /* Adjust as needed */
+    }
+
     #template-preview {
-        margin-top: 20px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        background-color: #fff;
+        flex-grow: 1; /* Allows the preview to take up remaining space */
+        min-width: 200px; /* Minimum width for the preview */
     }
 
     button {
@@ -78,53 +88,55 @@
     }
 </style>
 <div class="email-container">
-    <div class="form-elements-wrapper">
-        <div class="form-section">
-            <div class="section-header">Email Templator</div>
+    <div class="form-section">
+        <div class="section-header">Email Templator</div>
 
-            <!-- Checkbox for toggling visibility of additional options -->
-            <div class="form-group toggle-options">
-                <input type="checkbox" id="hide-options" name="hide-options" checked>
-                <label for="hide-options">Hide Options</label>
+        <div class="email-content">
+            <!-- Form Inputs Section -->
+            <div class="form-inputs">
+                <div class="form-group toggle-options">
+                    <input type="checkbox" id="hide-options" name="hide-options" checked>
+                    <label for="hide-options">Hide Options</label>
+                </div>
+
+                <div class="form-group select-template">
+                    <label for="email-template">Select Template:</label>
+                    <select id="email-template" onchange="updateTemplateAndSubject()">
+                        <option value="1" selected>Email Template 1</option>
+                        <option value="2">Email Template 2</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="email-subject">Email Subject:</label>
+                    <input type="text" id="email-subject" value="Escalation Email">
+                </div>
+
+                <div class="form-group">
+                    <label for="email-to">To:</label>
+                    <input type="email" id="email-to" value="patelv2895@gmail.com" placeholder="Recipient's email">
+                </div>
+
+                <div class="form-group">
+                    <label for="email-from">From:</label>
+                    <input type="email" id="email-from" value="patelv2895@gmail.com" placeholder="Your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="email-cc">CC:</label>
+                    <input type="email" id="email-cc" placeholder="CC email">
+                </div>
             </div>
-
-            <div class="form-group select-template">
-                <label for="email-template">Select Template:</label>
-                <select id="email-template" onchange="updateTemplateAndSubject()">
-                    <option value="1" selected>Email Template 1</option>
-                    <option value="2">Email Template 2</option>
-                </select>
+            <!-- Dynamic Fields Section -->
+            <div id="dynamic-fields-container">
+                <div class="dynamic-fields-content"></div>
             </div>
-
-            <div class="form-group">
-                <label for="email-subject">Email Subject:</label>
-                <input type="text" id="email-subject" value="Escalation Email">
-            </div>
-
-            <div class="form-group">
-                <label for="email-to">To:</label>
-                <input type="email" id="email-to" value="patelv2895@gmail.com" placeholder="Recipient's email">
-            </div>
-
-            <div class="form-group">
-                <label for="email-from">From:</label>
-                <input type="email" id="email-from" value="patelv2895@gmail.com" placeholder="Your email">
-            </div>
-
-            <div class="form-group">
-                <label for="email-cc">CC:</label>
-                <input type="email" id="email-cc" placeholder="CC email">
-            </div>
-
+            <!-- Template Preview Section -->
             <div id="template-preview" contenteditable="true"></div>
-
-            {% csrf_token %}
-            <button onclick="sendEmail()">Send Email</button>
         </div>
-    </div>
 
-    <div id="dynamic-fields-container">
-        <div class="dynamic-fields-content"></div>
+        {% csrf_token %}
+        <button onclick="sendEmail()">Send Email</button>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
