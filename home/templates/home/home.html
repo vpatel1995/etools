@@ -209,30 +209,50 @@
     }
 
     function updatePreview() {
-        const subject = document.getElementById('email-subject').value;
-        const toEmail = document.getElementById('email-to').value;
-        const fromEmail = document.getElementById('email-from').value;
-        const ccEmail = document.getElementById('email-cc').value;
         const dynamicFields = getDynamicFieldValues();
+        let templateContent = `
+            <table style="width: 100%; border-collapse: collapse;">
+                <colgroup>
+                    <col style="width: 30%;"> <!-- Adjust the percentage as needed -->
+                    <col style="width: 70%;"> <!-- This will take the remaining width -->
+                </colgroup>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px;">Ticket Number:</td>
+                    <td style="border: 1px solid black; padding: 5px;">${dynamicFields.Ticket_Number || ''}</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px;">Contact Name:</td>
+                    <td style="border: 1px solid black; padding: 5px;">${dynamicFields.Contact_Name || ''}</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px;">Contact Number:</td>
+                    <td style="border: 1px solid black; padding: 5px;">${dynamicFields.Contact_Number || ''}</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px;">Contact Location:</td>
+                    <td style="border: 1px solid black; padding: 5px;">${dynamicFields.Contact_Location || ''}</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px;">Contact working hours:</td>
+                    <td style="border: 1px solid black; padding: 5px;">N/A</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px;">Alternate Contact Number:</td>
+                    <td style="border: 1px solid black; padding: 5px;">N/A</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px;">Application Affected:</td>
+                    <td style="border: 1px solid black; padding: 5px;">${dynamicFields.Application_Affected || ''}</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 5px;">Description of Problem:</td>
+                    <td style="border: 1px solid black; padding: 5px;">${dynamicFields.Description_Of_Problem || ''}</td>
+                </tr>
+            </table>
+        `;
 
-        let previewContent = `<p>Subject: ${subject}</p>
-                            <p>To: ${toEmail}</p>
-                            <p>From: ${fromEmail}</p>
-                            <p>CC: ${ccEmail}</p>`;
-
-        for (const key in dynamicFields) {
-            previewContent += `<p>${key.replace(/_/g, ' ')}: ${dynamicFields[key]}</p>`;
-        }
-
-        document.getElementById('template-preview').innerHTML = previewContent;
+        document.getElementById('template-preview').innerHTML = templateContent;
     }
-
-
-    // Attach event listeners to input fields
-    document.getElementById('email-subject').addEventListener('input', updatePreview);
-    document.getElementById('email-to').addEventListener('input', updatePreview);
-    document.getElementById('email-from').addEventListener('input', updatePreview);
-    document.getElementById('email-cc').addEventListener('input', updatePreview);
 
 
     function getCSRF(name) {
