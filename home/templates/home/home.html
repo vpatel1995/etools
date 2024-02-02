@@ -5,13 +5,18 @@
 {% block content %}
 <style>
     /* home.css */
+/* Additional CSS */
     .email-container {
         display: flex;
-        margin: 20px;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background-color: #f8f8f8;
+        flex-wrap: wrap; /* Allow elements to wrap if needed */
+    }
+
+    .form-elements-wrapper {
+        flex: 1; /* Take available space */
+    }
+
+    #dynamic-fields-container {
+        flex-basis: 300px; /* Adjust the width of dynamic fields container */
     }
 
     .section-header {
@@ -73,47 +78,49 @@
     }
 </style>
 <div class="email-container">
-    <div class="form-section">
-        <div class="section-header">Email Templator</div>
+    <div class="form-elements-wrapper">
+        <div class="form-section">
+            <div class="section-header">Email Templator</div>
 
-        <!-- Checkbox for toggling visibility of additional options -->
-        <div class="form-group toggle-options">
-            <input type="checkbox" id="hide-options" name="hide-options" checked>
-            <label for="hide-options">Hide Options</label>
+            <!-- Checkbox for toggling visibility of additional options -->
+            <div class="form-group toggle-options">
+                <input type="checkbox" id="hide-options" name="hide-options" checked>
+                <label for="hide-options">Hide Options</label>
+            </div>
+
+            <div class="form-group select-template">
+                <label for="email-template">Select Template:</label>
+                <select id="email-template" onchange="updateTemplateAndSubject()">
+                    <option value="1" selected>Email Template 1</option>
+                    <option value="2">Email Template 2</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="email-subject">Email Subject:</label>
+                <input type="text" id="email-subject" value="Escalation Email">
+            </div>
+
+            <div class="form-group">
+                <label for="email-to">To:</label>
+                <input type="email" id="email-to" value="patelv2895@gmail.com" placeholder="Recipient's email">
+            </div>
+
+            <div class="form-group">
+                <label for="email-from">From:</label>
+                <input type="email" id="email-from" value="patelv2895@gmail.com" placeholder="Your email">
+            </div>
+
+            <div class="form-group">
+                <label for="email-cc">CC:</label>
+                <input type="email" id="email-cc" placeholder="CC email">
+            </div>
+
+            <div id="template-preview" contenteditable="true"></div>
+
+            {% csrf_token %}
+            <button onclick="sendEmail()">Send Email</button>
         </div>
-
-        <div class="form-group select-template">
-            <label for="email-template">Select Template:</label>
-            <select id="email-template" onchange="updateTemplateAndSubject()">
-                <option value="1" selected>Email Template 1</option>
-                <option value="2">Email Template 2</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="email-subject">Email Subject:</label>
-            <input type="text" id="email-subject" value="Escalation Email">
-        </div>
-
-        <div class="form-group">
-            <label for="email-to">To:</label>
-            <input type="email" id="email-to" value="patelv2895@gmail.com" placeholder="Recipient's email">
-        </div>
-
-        <div class="form-group">
-            <label for="email-from">From:</label>
-            <input type="email" id="email-from" value="patelv2895@gmail.com" placeholder="Your email">
-        </div>
-
-        <div class="form-group">
-            <label for="email-cc">CC:</label>
-            <input type="email" id="email-cc" placeholder="CC email">
-        </div>
-
-        <div id="template-preview" contenteditable="true"></div>
-
-        {% csrf_token %}
-        <button onclick="sendEmail()">Send Email</button>
     </div>
 
     <div id="dynamic-fields-container">
