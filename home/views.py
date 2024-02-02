@@ -5,12 +5,8 @@ from botocore.exceptions import ClientError
 import json
 from django.conf import settings
 import os
+from etools.helper_functions import load_email_template
 
-
-def load_email_template(template_id):
-    file_path = os.path.join(settings.BASE_DIR, 'home', 'email_templates', f'template{template_id}.txt')
-    with open(file_path, 'r') as file:
-        return file.read()
 
 def home(request):
     return render(request, os.path.join(settings.BASE_DIR, 'home', 'templates', 'home', 'home.html'))
