@@ -159,6 +159,7 @@
     }
 
     function sendEmail() {
+        console.log("sendEmail function called");
         var templateId = document.getElementById("email-template").value;
         var subject = document.getElementById("email-subject").value;
         var toEmail = document.getElementById("email-to").value;
@@ -166,6 +167,7 @@
         var ccEmail = document.getElementById("email-cc").value;
         var templateContent = document.getElementById("template-preview").innerHTML;
 
+        console.log("Data being sent:", { subject, templateId, templateContent, toEmail, fromEmail, ccEmail });
         $.ajax({
             url: '/send_email/',
             type: 'post',
@@ -182,9 +184,11 @@
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function(data) {
+                console.log("Email sent successfully", data);
                 alert(data.message);
             },
             error: function(xhr, errmsg, err) {
+                console.log("Email not sent", data);
                 alert('Failed to send email: ' + xhr.status + ": " + xhr.responseText);
             }
         });
