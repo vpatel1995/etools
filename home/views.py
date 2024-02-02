@@ -7,17 +7,6 @@ from django.conf import settings
 import os
 
 
-def get_template_content(request, template_id):
-    try:
-        # Construct the absolute file path
-        file_path = os.path.join(settings.BASE_DIR, 'home', 'email_templates', f'template{template_id}.txt')
-        
-        with open(file_path, 'r') as file:
-            content = file.read()
-        return JsonResponse({'content': content})
-    except FileNotFoundError:
-        return JsonResponse({'error': 'Template not found'}, status=404)
-
 def load_email_template(template_id):
     file_path = os.path.join(settings.BASE_DIR, 'home', 'email_templates', f'template{template_id}.txt')
     with open(file_path, 'r') as file:
@@ -92,3 +81,13 @@ def send_email_view(request):
 
     return JsonResponse({'message': 'Invalid request'}, status=400)
 
+def get_template_content(request, template_id):
+    try:
+        # Construct the absolute file path
+        file_path = os.path.join(settings.BASE_DIR, 'home', 'email_templates', f'template{template_id}.txt')
+        
+        with open(file_path, 'r') as file:
+            content = file.read()
+        return JsonResponse({'content': content})
+    except FileNotFoundError:
+        return JsonResponse({'error': 'Template not found'}, status=404)
