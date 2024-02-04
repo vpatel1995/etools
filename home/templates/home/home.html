@@ -112,6 +112,14 @@
         border: 1px solid #ccc;
         border-radius: 4px;
     }
+
+    .email-log {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        display: none; /* Initially hidden */
+    }
 </style>
 <div class="email-container">
     <div class="form-section">
@@ -156,8 +164,13 @@
         </div>
     </div>
 </div>
+<!-- Checkbox for toggling the visibility of the email log -->
+<div class="form-group toggle-log">
+    <input type="checkbox" id="toggle-email-log" name="toggle-email-log">
+    <label for="toggle-email-log">Show Latest Email Log</label>
+</div>
 {% if latest_email_log %}
-    <div>
+    <div class="email-log">
         <h3>Latest Email Sent</h3>
         <p><strong>Subject:</strong> {{ latest_email_log.subject }}</p>
         <p><strong>To:</strong> {{ latest_email_log.to_email }}</p>
@@ -315,6 +328,16 @@
 
         document.getElementById('template-preview').innerHTML = templateContent;
     }
+
+    function toggleEmailLogVisibility() {
+        var isLogVisible = document.getElementById('toggle-email-log').checked;
+        var emailLog = document.querySelector('.email-log');
+        if (emailLog) {
+            emailLog.style.display = isLogVisible ? 'block' : 'none';
+        }
+    }
+
+    document.getElementById('toggle-email-log').addEventListener('change', toggleEmailLogVisibility);
 
     // Function to toggle form visibility
     function toggleFormVisibility() {
