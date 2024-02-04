@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'dev_db',
         'USER': 'mysql_admin',
         'PASSWORD': 'Fighter1!',
-        'HOST': '3.17.160.233',
+        'HOST': '18.223.190.123',
         'PORT': '3306',
     }
 }
