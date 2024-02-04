@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'etools.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dev_db',
+        'USER': 'mysql_admin',
+        'PASSWORD': 'Fighter1!',
+        'HOST': '3.17.160.233',
+        'PORT': '3306',
     }
 }
 
