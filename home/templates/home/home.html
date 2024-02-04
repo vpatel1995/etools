@@ -34,13 +34,12 @@
     }
 
     .left-section {
-        flex: 0 0 30%; /* Adjust as needed, this sets the left section to 30% of the container width */
-        /* Other styles */
+        flex: 0 0 30%; /* his sets the left section to 30% of the container width */
+
     }
 
     .right-section {
         flex: 1; /* This allows the right section to take up the remaining space */
-        /* Other styles */
     }
 
     .form-group {
@@ -68,7 +67,7 @@
         border: 1px solid #ccc;
         background-color: #fff;
         height: auto; /* Adjust height based on content */
-        max-height: 500px; /* Example max height, adjust as needed */
+        max-height: 500px;
         overflow-y: auto; /* Allows scrolling inside the preview if content exceeds max height */
         flex-grow: 0; /* Prevents it from growing more than content size */
     }
@@ -87,7 +86,7 @@
     }
 
     .small-container {
-        max-width: 300px; /* Adjust the width as needed */
+        max-width: 300px;
     }
 
     .send-email-button {
@@ -184,7 +183,7 @@
     }
 
     function generateInputFields(templateContent) {
-        // Example regex to find placeholders like {{name}}
+        // Example regex to find placeholders with {{}}
         const placeholderRegex = /\{\{(\w+)\}\}/g;
         let match;
         let dynamicFieldsContent = document.querySelector('.dynamic-fields-content'); // Target the .dynamic-fields-content div
@@ -322,10 +321,10 @@
         templatePreview.style.display = isHidden ? 'none' : 'block';
     }
 
-    // Make sure to call this function to apply initial state
+    // Applying initil state
     toggleFormVisibility();
 
-    // Event listener for checkbox
+    // Event listener for checkbox, move together with others later
     document.getElementById('hide-options').addEventListener('change', toggleFormVisibility);
 
 
