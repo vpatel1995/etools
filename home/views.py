@@ -9,7 +9,9 @@ from etools.helper_functions import load_email_template
 
 
 def home(request):
-    return render(request, os.path.join(settings.BASE_DIR, 'home', 'templates', 'home', 'home.html'))
+    latest_email_log = EmailLog.objects.order_by('-sent_at').first()
+    return render(request, 'home/home.html', {'latest_email_log': latest_email_log})
+    #return render(request, os.path.join(settings.BASE_DIR, 'home', 'templates', 'home', 'home.html'))
 
 def send_email_view(request):
     if request.method == 'POST':

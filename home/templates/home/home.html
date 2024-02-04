@@ -156,6 +156,16 @@
         </div>
     </div>
 </div>
+{% if latest_email_log %}
+    <div>
+        <h3>Latest Email Sent</h3>
+        <p><strong>Subject:</strong> {{ latest_email_log.subject }}</p>
+        <p><strong>To:</strong> {{ latest_email_log.to_email }}</p>
+        <p><strong>From:</strong> {{ latest_email_log.from_email }}</p>
+        <p><strong>CC:</strong> {{ latest_email_log.cc_email }}</p>
+        <p><strong>Body:</strong> {{ latest_email_log.body | safe }}</p>
+    </div>
+{% endif %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function updateTemplateAndSubject() {
