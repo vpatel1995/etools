@@ -1,8 +1,9 @@
 from django.db import models
 
-class DevTable(models.Model):
-    name = models.CharField(max_length=100, blank=True, null=True)
-    value = models.CharField(max_length=100, blank=True, null=True)
+class DevTicket(models.Model):
+    user = models.CharField(max_length=255, default='unknown user')
+    ticket_id = models.CharField(max_length=255, default='N/A')
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        db_table = 'dev_table'
+    def __str__(self):
+        return f"DevTicket {self.id}"
