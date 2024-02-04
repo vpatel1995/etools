@@ -6,6 +6,8 @@ import json
 from django.conf import settings
 import os
 from .models import EmailLog
+from datetime import datetime
+
 from etools.helper_functions import load_email_template
 
 
@@ -72,6 +74,15 @@ def send_email_view(request):
         except ClientError as e:
             return JsonResponse({'message': e.response['Error']['Message']}, status=500)
         else:
+            # Create a new EmailLog entry
+            EmailLog.objects.create(
+                subject=subject,
+                to_email=to_email,
+                from_email=from_email,
+                cc_email=cc_email,
+                body=body_html,
+                sent_at=datetime.now()  # Assuming you have a `sent_at` field
+            )
             return JsonResponse({'message': 'Email sent successfully! Message ID: {}'.format(response['MessageId'])}, status=200)
 
     return JsonResponse({'message': 'Invalid request'}, status=400)
