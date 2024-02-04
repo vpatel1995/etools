@@ -81,7 +81,7 @@ def send_email_view(request):
                 from_email=from_email,
                 cc_email=cc_email,
                 body=body_html,
-                sent_at=datetime.now()  # Assuming you have a `sent_at` field
+                sent_at=datetime.now()
             )
             return JsonResponse({'message': 'Email sent successfully! Message ID: {}'.format(response['MessageId'])}, status=200)
 
