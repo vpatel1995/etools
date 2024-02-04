@@ -5,6 +5,7 @@ from botocore.exceptions import ClientError
 import json
 from django.conf import settings
 import os
+from .models import EmailLog
 from etools.helper_functions import load_email_template
 
 
