@@ -21,22 +21,18 @@ def send_email_view(request):
         cc_email = data.get('cc_email')
         subject = data.get('subject')
 
-        # Assuming dynamic fields are sent as a dictionary in 'dynamic_fields'
         dynamic_fields = data.get('dynamic_fields', {})
 
-        # Replace placeholders in the template content
         for key, value in dynamic_fields.items():
-            placeholder = f"{{{{{key}}}}}"  # Format: {{key}}
+            placeholder = f"{{{{{key}}}}}"
             template_content = template_content.replace(placeholder, value)
 
         body_html = "<html><head></head><body>" + template_content + "</body></html>"
 
-        # AWS SES Configuration
         aws_access_key_id = 'AKIASD7G5KU2SHEC4B52'
         aws_secret_access_key = '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'
         aws_region = "us-east-2"
 
-        # Use the provided 'from_email' as the sender
         sender = from_email
 
         # Create a new SES client
