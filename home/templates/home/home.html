@@ -423,10 +423,28 @@
     // Event listener for checkbox, move together with others later
     document.getElementById('hide-options').addEventListener('change', toggleFormVisibility);
     
+    var initialBubbleOrder = [];
+
+    function storeInitialBubbleOrder() {
+        var allBubbles = document.querySelectorAll('.bubble');
+        initialBubbleOrder = Array.from(allBubbles).map(bubble => bubble.id);
+    }
+
+    function restoreInitialBubbleOrder() {
+        var bubbleContainer = document.querySelector('.bubble-container');
+        initialBubbleOrder.forEach(bubbleId => {
+            var bubble = document.getElementById(bubbleId);
+            bubbleContainer.appendChild(bubble);
+        });
+    }
+
     function toggleBubble(bubbleId) {
         var allBubbles = document.querySelectorAll('.bubble');
         var bubbleContainer = document.querySelector('.bubble-container');
         var bubble = document.getElementById(bubbleId);
+
+        // Restore initial order before any toggling
+        restoreInitialBubbleOrder();
 
         // Remove 'expanded' class from all bubbles except the clicked one
         allBubbles.forEach(function(bubble) {
@@ -461,6 +479,7 @@
         return cookieValue;
     }
     document.addEventListener('DOMContentLoaded', function() {
+        storeInitialBubbleOrder();
         updateTemplateAndSubject();
         updatePreview();
         toggleFormVisibility();
