@@ -160,6 +160,15 @@
         border-bottom: 1px solid #ccc;
     }
 
+    .email-templator-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .email-templator-text {
+        margin-right: 10px;
+    }
+
     .quick-action-button {
         padding: 5px 10px;
         background-color: #28a745;
@@ -167,7 +176,6 @@
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        width: 33%; /* Set the width to a third of its container */
         align-self: flex-start;
     }
 
@@ -175,14 +183,19 @@
         background-color: #218838;
     }
 
+    
+
 </style>
 <div class="bubble-container">
     <div class="bubble" id="quick-tools">
         <div class="bubble-header" onclick="toggleBubble('quick-tools')">Quick Tools</div>
         <div class="bubble-overview">
-            <span>Email Templator</span>
+            <span class="email-templator-text">Email Templator</span>
             {% csrf_token %}
-            <button onclick="sendEmail(true)" class="quick-action-button">Send Email (Expand to check params)</button>
+            <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
+        </div>
+        <div class="email-log-container">
+            <span>Email Log</span>
         </div>
         <div class="bubble-content">
             <!-- Your existing email templator and other tools here -->
@@ -226,24 +239,22 @@
                         <div id="template-preview" contenteditable="true"></div>
                     </div>
                 </div>
-                
+            </div>    
             <!-- Checkbox for toggling the visibility of the email log -->
             <div class="form-group toggle-log">
                 <input type="checkbox" id="toggle-email-log" name="toggle-email-log">
                 <label for="toggle-email-log">Show Latest Email Log</label>
             </div>
             {% if latest_email_log %}
-                <div class="email-log">
-                    <h3>Latest Email Sent</h3>
-                    <p><strong>Subject:</strong> {{ latest_email_log.subject }}</p>
-                    <p><strong>To:</strong> {{ latest_email_log.to_email }}</p>
-                    <p><strong>From:</strong> {{ latest_email_log.from_email }}</p>
-                    <p><strong>CC:</strong> {{ latest_email_log.cc_email }}</p>
-                    <p><strong>Body:</strong> {{ latest_email_log.body | safe }}</p>
-                </div>
-            {% endif %}
-                
+            <div class="email-log">
+                <h3>Latest Email Sent</h3>
+                <p><strong>Subject:</strong> {{ latest_email_log.subject }}</p>
+                <p><strong>To:</strong> {{ latest_email_log.to_email }}</p>
+                <p><strong>From:</strong> {{ latest_email_log.from_email }}</p>
+                <p><strong>CC:</strong> {{ latest_email_log.cc_email }}</p>
+                <p><strong>Body:</strong> {{ latest_email_log.body | safe }}</p>
             </div>
+            {% endif %}
         </div>
     </div>
 
