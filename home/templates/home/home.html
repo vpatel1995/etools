@@ -220,58 +220,65 @@
         <div class="bubble-overview">
             <ul class="bubble-tool-list">
                 <li>
-                    <span>Email Templator</span>
+                    <span onclick="toggleEmailContent()">Email Templator</span>
                     <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
                 </li>
                 <li>
-                    <span>Dummy Tool 2</span>
+                    <span onclick="toggleDummyContent()">Dummy Tool 2</span>
                     <button onclick="dummyAction()" class="quick-action-button">Perform Action</button>
                 </li>
             </ul>
         </div>
         <div class="bubble-content">
-            <!-- Existing email templator and other tools here -->
-            <div class="email-container">
-                <div class="form-section">
-                    <div class="left-section">
-                        <div class="section-header">Email Templator</div>
-                        <!-- Checkbox for toggling visibility of additional options -->
-                        <div class="form-group toggle-options">
-                            <input type="checkbox" id="hide-options" name="hide-options" checked>
-                            <label for="hide-options">Hide Options</label>
+            <div id="email-templator-content">
+                <!-- Existing email templator and other tools here -->
+                <div class="email-container">
+                    <div class="form-section">
+                        <div class="left-section">
+                            <div class="section-header">Email Templator</div>
+                            <!-- Checkbox for toggling visibility of additional options -->
+                            <div class="form-group toggle-options">
+                                <input type="checkbox" id="hide-options" name="hide-options" checked>
+                                <label for="hide-options">Hide Options</label>
+                            </div>
+                            <div class="form-group select-template">
+                                <label for="email-template">Select Template:</label>
+                                <select id="email-template" onchange="updateTemplateAndSubject()">
+                                    <option value="1" selected>Email Template 1</option>
+                                    <option value="2">Email Template 2</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="email-subject">Email Subject:</label>
+                                <input type="text" id="email-subject" value="Escalation Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="email-to">To:</label>
+                                <input type="email" id="email-to" value="patelv2895@gmail.com" placeholder="Recipient's email">
+                            </div>
+                            <div class="form-group">
+                                <label for="email-from">From:</label>
+                                <input type="email" id="email-from" value="patelv2895@gmail.com" placeholder="Your email">
+                            </div>
+                            <div class="form-group">
+                                <label for="email-cc">CC:</label>
+                                <input type="email" id="email-cc" placeholder="CC email">
+                            </div>
+                            <div id="dynamic-fields-container">
+                                <div class="dynamic-fields-content"></div>
+                            </div>
                         </div>
-                        <div class="form-group select-template">
-                            <label for="email-template">Select Template:</label>
-                            <select id="email-template" onchange="updateTemplateAndSubject()">
-                                <option value="1" selected>Email Template 1</option>
-                                <option value="2">Email Template 2</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="email-subject">Email Subject:</label>
-                            <input type="text" id="email-subject" value="Escalation Email">
-                        </div>
-                        <div class="form-group">
-                            <label for="email-to">To:</label>
-                            <input type="email" id="email-to" value="patelv2895@gmail.com" placeholder="Recipient's email">
-                        </div>
-                        <div class="form-group">
-                            <label for="email-from">From:</label>
-                            <input type="email" id="email-from" value="patelv2895@gmail.com" placeholder="Your email">
-                        </div>
-                        <div class="form-group">
-                            <label for="email-cc">CC:</label>
-                            <input type="email" id="email-cc" placeholder="CC email">
-                        </div>
-                        <div id="dynamic-fields-container">
-                            <div class="dynamic-fields-content"></div>
+                        <div class="right-section">
+                            <div id="template-preview" contenteditable="true"></div>
                         </div>
                     </div>
-                    <div class="right-section">
-                        <div id="template-preview" contenteditable="true"></div>
-                    </div>
-                </div>
-            </div>    
+                </div>  
+            </div>
+            <!-- Dummy Tool Content -->
+            <div id="dummy-tool-content" style="display: none;">
+                <!-- Content for Dummy Tool 2 -->
+                <p>Dummy tool content goes here...</p>
+            </div>
             <!-- Checkbox for toggling the visibility of the email log -->
             <div class="form-group toggle-log">
                 <input type="checkbox" id="toggle-email-log" name="toggle-email-log">
@@ -313,6 +320,16 @@
     function dummyAction() {
         console.log("Dummy action performed");
         alert('Template not found')
+    }
+
+    function toggleEmailContent() {
+        var emailContent = document.getElementById('email-templator-content');
+        emailContent.style.display = emailContent.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function toggleDummyContent() {
+        var dummyContent = document.getElementById('dummy-tool-content');
+        dummyContent.style.display = dummyContent.style.display === 'none' ? 'block' : 'none';
     }
 
     // Utility Functions
