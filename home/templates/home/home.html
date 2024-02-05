@@ -413,20 +413,19 @@
 
     // Event listener for checkbox, move together with others later
     document.getElementById('hide-options').addEventListener('change', toggleFormVisibility);
-
+    
     function toggleBubble(bubbleId) {
-        var bubble = document.getElementById(bubbleId);
-        var content = bubble.querySelector('.bubble-content');
-        var isVisible = content.style.display === 'block';
+        var bubbleContent = document.getElementById(bubbleId).querySelector('.bubble-content');
+        var isContentVisible = bubbleContent.style.display === 'block';
 
-        // Collapse all bubbles
-        var allBubbles = document.querySelectorAll('.bubble .bubble-content');
-        allBubbles.forEach(function(bub) {
-            bub.style.display = 'none';
+        // Hide all bubble contents
+        var allBubbleContents = document.querySelectorAll('.bubble .bubble-content');
+        allBubbleContents.forEach(function(content) {
+            content.style.display = 'none';
         });
 
-        // Toggle the clicked bubble
-        content.style.display = isVisible ? 'none' : 'block';
+        // Toggle visibility of the clicked bubble's content
+        bubbleContent.style.display = isContentVisible ? 'none' : 'block';
     }
 
     function getCSRF(name) {
