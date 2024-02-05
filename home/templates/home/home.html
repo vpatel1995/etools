@@ -244,6 +244,87 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    // Utility Functions
+    function getCSRF(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Initialization and State Management
+    var initialBubbleOrder = [];
+    function storeInitialBubbleOrder() {
+        var allBubbles = document.querySelectorAll('.bubble');
+        initialBubbleOrder = Array.from(allBubbles).map(bubble => bubble.id);
+    }
+
+    function restoreInitialBubbleOrder() {
+        var bubbleContainer = document.querySelector('.bubble-container');
+        initialBubbleOrder.forEach(bubbleId => {
+            var bubble = document.getElementById(bubbleId);
+            bubbleContainer.appendChild(bubble);
+        });
+    }
+
+    // Interactive Elements and Event Handlers
+    function toggleBubble(bubbleId) {
+        var allBubbles = document.querySelectorAll('.bubble');
+        var bubbleContainer = document.querySelector('.bubble-container');
+        var bubble = document.getElementById(bubbleId);
+
+        // Restore initial order before any toggling
+        restoreInitialBubbleOrder();
+
+        // Remove 'expanded' class from all bubbles except the clicked one
+        allBubbles.forEach(function(bubble) {
+            if (bubble.id !== bubbleId) {
+                bubble.classList.remove('bubble-expanded');
+                bubble.querySelector('.bubble-content').classList.remove('bubble-content-expanded');
+            }
+        });
+
+        // Toggle the 'expanded' class on the clicked bubble
+        bubble.classList.toggle('bubble-expanded');
+        bubble.querySelector('.bubble-content').classList.toggle('bubble-content-expanded');
+
+        // If the bubble is now expanded, move it to the first position
+        if (bubble.classList.contains('bubble-expanded')) {
+            bubbleContainer.insertBefore(bubble, bubbleContainer.firstChild);
+        }
+    }
+
+    function toggleEmailLogVisibility() {
+        var isLogVisible = document.getElementById('toggle-email-log').checked;
+        var emailLog = document.querySelector('.email-log');
+        if (emailLog) {
+            emailLog.style.display = isLogVisible ? 'block' : 'none';
+        }
+    }
+
+    function toggleFormVisibility() {
+        var isHidden = document.getElementById('hide-options').checked;
+        var formElementsToHide = document.querySelectorAll('.left-section .form-group:not(.toggle-options):not(.select-template)');
+        var dynamicFields = document.getElementById('dynamic-fields-container');
+        var templatePreview = document.getElementById('template-preview');
+
+        // Show or hide elements based on the checkbox state
+        formElementsToHide.forEach(function(el) {
+            el.style.display = isHidden ? 'none' : 'flex';
+        });
+        dynamicFields.style.display = isHidden ? 'none' : 'block';
+        templatePreview.style.display = isHidden ? 'none' : 'block';
+    }
+
+    // Template and Email Handling Functions
     function updateTemplateAndSubject() {
         var templateId = document.getElementById("email-template").value;
         var subject = templateId === "1" ? "Subject 1" : "Subject 2";
@@ -269,15 +350,15 @@
     }
 
     function generateInputFields(templateContent) {
-        // Example regex to find placeholders with double brakcets
+        // Example regex to find placeholders with double brackets
         const placeholderRegex = /\{\{(\w+)\}\}/g;
         let match;
-        let dynamicFieldsContent = document.querySelector('.dynamic-fields-content'); // Target the .dynamic-fields-content div
+        let dynamicFieldsContent = document.querySelector('.dynamic-fields-content');
         dynamicFieldsContent.innerHTML = ''; // Clear previous fields
 
         while ((match = placeholderRegex.exec(templateContent)) !== null) {
             let inputField = createInputField(match[1]);
-            dynamicFieldsContent.appendChild(inputField); // Append to .dynamic-fields-content
+            dynamicFieldsContent.appendChild(inputField);
         }
     }
 
@@ -290,7 +371,6 @@
         input.id = fieldName;
         input.name = fieldName;
 
-        // Attach event listener to dynamically created input field
         input.addEventListener('input', updatePreview);
 
         container.appendChild(label);
@@ -300,7 +380,6 @@
     }
 
     function sendEmail() {
-        console.log("sendEmail function called");
         var templateId = document.getElementById("email-template").value;
         var subject = document.getElementById("email-subject").value;
         var toEmail = document.getElementById("email-to").value;
@@ -308,7 +387,6 @@
         var ccEmail = document.getElementById("email-cc").value;
         var templateContent = document.getElementById("template-preview").innerHTML;
 
-        console.log("Data being sent:", { subject, templateId, templateContent, toEmail, fromEmail, ccEmail });
         $.ajax({
             url: '/send_email/',
             type: 'post',
@@ -325,11 +403,9 @@
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function(data) {
-                console.log("Email sent successfully", data);
                 alert(data.message);
             },
             error: function(xhr, errmsg, err) {
-                console.log("Email not sent", data);
                 alert('Failed to send email: ' + xhr.status + ": " + xhr.responseText);
             }
         });
@@ -392,92 +468,11 @@
         document.getElementById('template-preview').innerHTML = templateContent;
     }
 
-    function toggleEmailLogVisibility() {
-        var isLogVisible = document.getElementById('toggle-email-log').checked;
-        var emailLog = document.querySelector('.email-log');
-        if (emailLog) {
-            emailLog.style.display = isLogVisible ? 'block' : 'none';
-        }
-    }
-
+    // Event Listeners
     document.getElementById('toggle-email-log').addEventListener('change', toggleEmailLogVisibility);
-
-    // Function to toggle form visibility
-    function toggleFormVisibility() {
-        var isHidden = document.getElementById('hide-options').checked;
-        var formElementsToHide = document.querySelectorAll('.left-section .form-group:not(.toggle-options):not(.select-template)');
-        var dynamicFields = document.getElementById('dynamic-fields-container');
-        var templatePreview = document.getElementById('template-preview');
-
-        // Show or hide elements based on the checkbox state
-        formElementsToHide.forEach(function(el) {
-            el.style.display = isHidden ? 'none' : 'flex';
-        });
-        dynamicFields.style.display = isHidden ? 'none' : 'block';
-        templatePreview.style.display = isHidden ? 'none' : 'block';
-    }
-
-    // Applying initil state
-    toggleFormVisibility();
-
-    // Event listener for checkbox, move together with others later
     document.getElementById('hide-options').addEventListener('change', toggleFormVisibility);
-    
-    var initialBubbleOrder = [];
 
-    function storeInitialBubbleOrder() {
-        var allBubbles = document.querySelectorAll('.bubble');
-        initialBubbleOrder = Array.from(allBubbles).map(bubble => bubble.id);
-    }
-
-    function restoreInitialBubbleOrder() {
-        var bubbleContainer = document.querySelector('.bubble-container');
-        initialBubbleOrder.forEach(bubbleId => {
-            var bubble = document.getElementById(bubbleId);
-            bubbleContainer.appendChild(bubble);
-        });
-    }
-
-    function toggleBubble(bubbleId) {
-        var allBubbles = document.querySelectorAll('.bubble');
-        var bubbleContainer = document.querySelector('.bubble-container');
-        var bubble = document.getElementById(bubbleId);
-
-        // Restore initial order before any toggling
-        restoreInitialBubbleOrder();
-
-        // Remove 'expanded' class from all bubbles except the clicked one
-        allBubbles.forEach(function(bubble) {
-            if (bubble.id !== bubbleId) {
-                bubble.classList.remove('bubble-expanded');
-                bubble.querySelector('.bubble-content').classList.remove('bubble-content-expanded');
-            }
-        });
-
-        // Toggle the 'expanded' class on the clicked bubble
-        bubble.classList.toggle('bubble-expanded');
-        bubble.querySelector('.bubble-content').classList.toggle('bubble-content-expanded');
-
-        // If the bubble is now expanded, move it to the first position
-        if (bubble.classList.contains('bubble-expanded')) {
-            bubbleContainer.insertBefore(bubble, bubbleContainer.firstChild);
-        }
-    }
-
-    function getCSRF(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = jQuery.trim(cookies[i]);
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
+    // Initialization on Document Ready
     document.addEventListener('DOMContentLoaded', function() {
         storeInitialBubbleOrder();
         updateTemplateAndSubject();
@@ -485,4 +480,5 @@
         toggleFormVisibility();
     }, false);
 </script>
+
 {% endblock %}
