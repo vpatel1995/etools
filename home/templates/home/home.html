@@ -183,15 +183,35 @@
         background-color: #218838;
     }
 
+
+
+
+
+    /* Remove later! */
+    .dummy-tool-container {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .dummy-tool-text {
+        margin-right: 10px;
+    }
+
+
 </style>
 <div class="bubble-container">
     <div class="bubble" id="quick-tools">
-        <div class="bubble-header" onclick="toggleBubble('quick-tools')">Quick Tools</div>
+        <div class="bubble-header" onclick="toggleBubble('quick-tools')">Quick Tools (Click To Expand)</div>
         <div class="bubble-overview">
             <div class="email-templator-container">
                 <span class="email-templator-text">Email Templator</span>
                 {% csrf_token %}
                 <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
+            </div>
+            <div class="dummy-tool-container">
+                <span class="dummy-tool-text">Dummy Tool 2</span>
+                <button onclick="dummyAction()" class="quick-action-button">Perform Action</button>
             </div>
         </div>
         <div class="bubble-content">
@@ -274,6 +294,12 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    // Remove later
+    function dummyAction() {
+        console.log("Dummy action performed");
+        alert('alert');
+    }
+
     // Utility Functions
     function getCSRF(name) {
         let cookieValue = null;
