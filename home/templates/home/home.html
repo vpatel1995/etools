@@ -208,7 +208,7 @@
         margin-top: 10px;
     }
 
-    .dummy-tool-text {
+    #dummy-tool-text {
         margin-right: 10px;
     }
 
@@ -219,19 +219,22 @@
         <div class="bubble-header" onclick="toggleBubble('quick-tools')">Quick Tools (Click To Expand)</div>
         <div class="bubble-overview">
             <div class="email-templator-container">
-                <span class="email-templator-text">Email Templator</span>
+                <span class="hide header" id="email-templator-text">Email Templator</span>
                 {% csrf_token %}
                 <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
             </div>
-            <!-- 
             <div class="dummy-tool-container">
-                <span class="dummy-tool-text">Dummy Tool 2</span>
+                <span class="hide header" id="dummy-tool-text">Dummy Tool 2</span>
                 <button onclick="dummyAction()" class="quick-action-button">Perform Action</button>
             </div>
-            -->
         </div>
         <div class="bubble-content">
             <!-- Existing email templator and other tools here -->
+            <div class="email-templator-container">
+                <span class="visible header" id="email-templator-text">Email Templator</span>
+                {% csrf_token %}
+                <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
+            </div>
             <div class="email-container">
                 <div class="form-section">
                     <div class="left-section">
@@ -368,6 +371,22 @@
                 bubble.querySelector('.bubble-content').classList.remove('bubble-content-expanded');
             }
         });
+
+        // Toggle the 'expanded' class on the clicked bubble
+        bubble.classList.toggle('bubble-expanded');
+        bubble.querySelector('.bubble-content').classList.toggle('bubble-content-expanded');
+
+        // Toggle visibility of elements with 'hide header' class
+        var elementsToHide = document.querySelectorAll('.hide header');
+        elementsToHide.forEach(function(element) {
+            element.style.display = bubble.classList.contains('bubble-expanded') ? 'none' : 'block';
+        });
+
+        // If the bubble is now expanded, move it to the first position
+        if (bubble.classList.contains('bubble-expanded')) {
+            bubbleContainer.insertBefore(bubble, bubbleContainer.firstChild);
+        }
+    }
 
         // Toggle the 'expanded' class on the clicked bubble
         bubble.classList.toggle('bubble-expanded');
