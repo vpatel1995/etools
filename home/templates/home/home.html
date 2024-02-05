@@ -362,7 +362,6 @@
         var allBubbles = document.querySelectorAll('.bubble');
         var bubbleContainer = document.querySelector('.bubble-container');
         var bubble = document.getElementById(bubbleId);
-        var bubbleHeader = bubble.querySelector('.bubble-header');
 
         // Restore initial order before any toggling
         restoreInitialBubbleOrder();
@@ -372,7 +371,7 @@
             if (otherBubble.id !== bubbleId) {
                 otherBubble.classList.remove('bubble-expanded');
                 otherBubble.querySelector('.bubble-content').classList.remove('bubble-content-expanded');
-                // Make sure headers of other bubbles are visible
+                // Ensure headers of other bubbles are visible
                 var otherHeader = otherBubble.querySelector('.bubble-header');
                 if (otherHeader) {
                     otherHeader.style.display = 'block';
@@ -382,9 +381,13 @@
 
         // Toggle the 'expanded' class on the clicked bubble
         bubble.classList.toggle('bubble-expanded');
-        bubble.querySelector('.bubble-content').classList.toggle('bubble-content-expanded');
+        var bubbleContent = bubble.querySelector('.bubble-content');
+        if (bubbleContent) {
+            bubbleContent.classList.toggle('bubble-content-expanded');
+        }
 
         // Toggle visibility of the bubble header
+        var bubbleHeader = bubble.querySelector('.bubble-header');
         if (bubbleHeader) {
             bubbleHeader.style.display = bubble.classList.contains('bubble-expanded') ? 'none' : 'block';
         }
