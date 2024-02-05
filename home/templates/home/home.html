@@ -539,51 +539,32 @@
     }
 
     function updatePreview() {
-        const dynamicFields = getDynamicFieldValues();
-        let templateContent = `
-            <table style="width: 100%; border-collapse: collapse;">
-                <colgroup>
-                    <col style="width: 30%;"> <!-- Adjust the percentage as needed -->
-                    <col style="width: 70%;"> <!-- This will take the remaining width -->
-                </colgroup>
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px;">Ticket Number:</td>
-                    <td style="border: 1px solid black; padding: 5px;">${dynamicFields.Ticket_Number || ''}</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px;">Contact Name:</td>
-                    <td style="border: 1px solid black; padding: 5px;">${dynamicFields.Contact_Name || ''}</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px;">Contact Number:</td>
-                    <td style="border: 1px solid black; padding: 5px;">${dynamicFields.Contact_Number || ''}</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px;">Contact Location:</td>
-                    <td style="border: 1px solid black; padding: 5px;">${dynamicFields.Contact_Location || ''}</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px;">Contact working hours:</td>
-                    <td style="border: 1px solid black; padding: 5px;">N/A</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px;">Alternate Contact Number:</td>
-                    <td style="border: 1px solid black; padding: 5px;">N/A</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px;">Application Affected:</td>
-                    <td style="border: 1px solid black; padding: 5px;">${dynamicFields.Application_Affected || ''}</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px;">Description of Problem:</td>
-                    <td style="border: 1px solid black; padding: 5px;">${dynamicFields.Description_Of_Problem || ''}</td>
-                </tr>
-            </table>
-        `;
+        // Get the currently selected template ID
+        var templateId = document.getElementById("email-template").value;
 
-        document.getElementById('template-preview').innerHTML = templateContent;
+        // Fetch the content of the selected template
+        fetch(`/get_template_content/${templateId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.content) {
+                    const dynamicFields = getDynamicFieldValues();
+                    let templateContent = data.content;
+
+                    // Replace placeholders with dynamic field values
+                    for (const field in dynamicFields) {
+                        templateContent = templateContent.replace(new RegExp(`\\{\\{${field}\\}\\}`, 'g'), dynamicFields[field]);
+                    }
+
+                    // Update the template preview
+                    document.getElementById('template-preview').innerHTML = templateContent;
+                } else {
+                    alert('Template not found');
+                }
+            })
+            .catch(error => {
+                alert('Error fetching template: ' + error);
+            });
     }
-
     // Event Listeners
     document.getElementById('toggle-email-log').addEventListener('change', toggleEmailLogVisibility);
     document.getElementById('hide-options').addEventListener('change', toggleFormVisibility);
