@@ -156,10 +156,35 @@
         display: block; /* Show content when expanded */
     }
 
+    .bubble-overview {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .quick-action-button {
+        padding: 5px 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .quick-action-button:hover {
+        background-color: #218838;
+    }
+
 </style>
 <div class="bubble-container">
     <div class="bubble" id="quick-tools">
         <div class="bubble-header" onclick="toggleBubble('quick-tools')">Quick Tools</div>
+        <div class="bubble-overview">
+            <span>Email Templator</span>
+            <button onclick="sendEmail(true)" class="quick-action-button">Send Email (Expand to check params)</button>
+        </div>
         <div class="bubble-content">
             <!-- Your existing email templator and other tools here -->
             <div class="email-container">
