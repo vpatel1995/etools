@@ -1,0 +1,6 @@
+Hello {{username}},
+
+This email was sent out as a test to see if dynamic tagging is working. If so {{variable}} should be a random variable.
+
+thanks,
+{{sender}}
