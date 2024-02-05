@@ -388,12 +388,6 @@
         bubble.classList.toggle('bubble-expanded');
         bubble.querySelector('.bubble-content').classList.toggle('bubble-content-expanded');
 
-        // Toggle visibility of the bubble header
-        var bubbleHeader = bubble.querySelector('.bubble-header');
-        if (bubbleHeader) {
-            bubbleHeader.style.display = bubble.classList.contains('bubble-expanded') ? 'none' : 'block';
-        }
-
         // Toggle visibility of the toggle-header
         var toggleHeader = bubble.querySelector('.toggle-header');
         if (toggleHeader) {
