@@ -219,11 +219,11 @@
     <div class="bubble" id="quick-tools">
         <div class="bubble-header" onclick="toggleBubble('quick-tools')">Quick Tools (Click To Expand)</div>
         <div class="bubble-overview">
-            <ul class="bubble-tool-list">
-                <li>
+            <div class="bubble-tool-list">
+                <div>
                     <span onclick="toggleEmailContent()">Email Templator</span>
                     <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
-                </li>
+                </div>
                 <div id="email-templator-content">
                     <!-- Existing email templator and other tools here -->
                     <div class="email-container">
@@ -269,7 +269,7 @@
                     </div>  
                 </div>
                 
-                <li>
+                <div>
                     <span onclick="toggleDummyContent()">Dummy Tool 2</span>
                     <button onclick="dummyAction()" class="quick-action-button">Perform Action</button>
                     <!-- Dummy Tool Content -->
@@ -277,9 +277,8 @@
                         <!-- Content for Dummy Tool 2 -->
                         <p>Dummy tool content goes here...</p>
                     </div>
-                </li>
-                
-            </ul>
+                </div>
+            </div>
         </div>
         <div class="bubble-content">
             <!-- Dummy Tool Content -->
