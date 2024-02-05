@@ -118,11 +118,11 @@
     }
 
     .bubble-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-        margin: 20px;
-        grid-auto-rows: minmax(100px, auto);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px;
+    grid-auto-rows: minmax(100px, auto);
     }
 
     .bubble {
@@ -130,7 +130,16 @@
         border: 1px solid #ccc;
         border-radius: 8px;
         background-color: #eef;
-        transition: all 0.3s ease-in-out; /* Optional: for smooth transition */
+        transition: all 0.3s ease-in-out;
+    }
+
+    .bubble-expanded {
+        grid-column: 1 / -1; /* This should span all columns */
+    }
+
+    .bubble-content-expanded {
+        display: block;
+        width: 100%; /* Ensure it takes the full width */
     }
 
     .bubble-header {
@@ -143,14 +152,6 @@
         margin-top: 10px;
     }
 
-    .bubble-expanded {
-        grid-column: 1 / -1; /* Span the bubble across all columns */
-        transition: all 0.3s ease-in-out;
-    }
-
-    .bubble-content-expanded {
-        display: block; /* Show content when expanded */
-    }
 
     .bubble-overview {
         display: flex;
@@ -158,6 +159,11 @@
         align-items: center;
         padding: 10px;
         border-bottom: 1px solid #ccc;
+    }
+
+    .email-templator-container {
+        display: flex;
+        align-items: center;
     }
 
     .email-templator-text {
