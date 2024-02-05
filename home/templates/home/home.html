@@ -1,6 +1,6 @@
 {% extends 'header_base.html' %}
 {% load static %}
-{% block title %}Send Email{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block content %}
 <style>
@@ -120,65 +120,91 @@
         background-color: #fff;
         display: none; /* Initially hidden */
     }
+
+    .quick-tools {
+        margin: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #eef;
+    }
+
+    .quick-tools-header {
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .quick-tools-content {
+        display: none; /* Initially hidden */
+        margin-top: 10px;
+    }
 </style>
-<div class="email-container">
-    <div class="form-section">
-        <div class="left-section">
-            <div class="section-header">Email Templator</div>
-            <!-- Checkbox for toggling visibility of additional options -->
-            <div class="form-group toggle-options">
-                <input type="checkbox" id="hide-options" name="hide-options" checked>
-                <label for="hide-options">Hide Options</label>
+<div class="quick-tools">
+    <div class="quick-tools-header" onclick="toggleQuickTools()">Quick Tools</div>
+    <div class="quick-tools-content">
+        <!-- Your existing email templator and other tools here -->
+        <div class="email-container">
+            <div class="form-section">
+                <div class="left-section">
+                    <div class="section-header">Email Templator</div>
+                    <!-- Checkbox for toggling visibility of additional options -->
+                    <div class="form-group toggle-options">
+                        <input type="checkbox" id="hide-options" name="hide-options" checked>
+                        <label for="hide-options">Hide Options</label>
+                    </div>
+                    <div class="form-group select-template">
+                        <label for="email-template">Select Template:</label>
+                        <select id="email-template" onchange="updateTemplateAndSubject()">
+                            <option value="1" selected>Email Template 1</option>
+                            <option value="2">Email Template 2</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email-subject">Email Subject:</label>
+                        <input type="text" id="email-subject" value="Escalation Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="email-to">To:</label>
+                        <input type="email" id="email-to" value="patelv2895@gmail.com" placeholder="Recipient's email">
+                    </div>
+                    <div class="form-group">
+                        <label for="email-from">From:</label>
+                        <input type="email" id="email-from" value="patelv2895@gmail.com" placeholder="Your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="email-cc">CC:</label>
+                        <input type="email" id="email-cc" placeholder="CC email">
+                    </div>
+                    <div id="dynamic-fields-container">
+                        <div class="dynamic-fields-content"></div>
+                    </div>
+                    {% csrf_token %}
+                    <button onclick="sendEmail()" class="send-email-button">Send Email</button>
+                </div>
+                <div class="right-section">
+                    <div id="template-preview" contenteditable="true"></div>
+                </div>
             </div>
-            <div class="form-group select-template">
-                <label for="email-template">Select Template:</label>
-                <select id="email-template" onchange="updateTemplateAndSubject()">
-                    <option value="1" selected>Email Template 1</option>
-                    <option value="2">Email Template 2</option>
-                </select>
+            
+            <!-- Checkbox for toggling the visibility of the email log -->
+            <div class="form-group toggle-log">
+                <input type="checkbox" id="toggle-email-log" name="toggle-email-log">
+                <label for="toggle-email-log">Show Latest Email Log</label>
             </div>
-            <div class="form-group">
-                <label for="email-subject">Email Subject:</label>
-                <input type="text" id="email-subject" value="Escalation Email">
-            </div>
-            <div class="form-group">
-                <label for="email-to">To:</label>
-                <input type="email" id="email-to" value="patelv2895@gmail.com" placeholder="Recipient's email">
-            </div>
-            <div class="form-group">
-                <label for="email-from">From:</label>
-                <input type="email" id="email-from" value="patelv2895@gmail.com" placeholder="Your email">
-            </div>
-            <div class="form-group">
-                <label for="email-cc">CC:</label>
-                <input type="email" id="email-cc" placeholder="CC email">
-            </div>
-            <div id="dynamic-fields-container">
-                <div class="dynamic-fields-content"></div>
-            </div>
-            {% csrf_token %}
-            <button onclick="sendEmail()" class="send-email-button">Send Email</button>
-        </div>
-        <div class="right-section">
-            <div id="template-preview" contenteditable="true"></div>
+            {% if latest_email_log %}
+                <div class="email-log">
+                    <h3>Latest Email Sent</h3>
+                    <p><strong>Subject:</strong> {{ latest_email_log.subject }}</p>
+                    <p><strong>To:</strong> {{ latest_email_log.to_email }}</p>
+                    <p><strong>From:</strong> {{ latest_email_log.from_email }}</p>
+                    <p><strong>CC:</strong> {{ latest_email_log.cc_email }}</p>
+                    <p><strong>Body:</strong> {{ latest_email_log.body | safe }}</p>
+                </div>
+            {% endif %}
+            
         </div>
     </div>
 </div>
-<!-- Checkbox for toggling the visibility of the email log -->
-<div class="form-group toggle-log">
-    <input type="checkbox" id="toggle-email-log" name="toggle-email-log">
-    <label for="toggle-email-log">Show Latest Email Log</label>
-</div>
-{% if latest_email_log %}
-    <div class="email-log">
-        <h3>Latest Email Sent</h3>
-        <p><strong>Subject:</strong> {{ latest_email_log.subject }}</p>
-        <p><strong>To:</strong> {{ latest_email_log.to_email }}</p>
-        <p><strong>From:</strong> {{ latest_email_log.from_email }}</p>
-        <p><strong>CC:</strong> {{ latest_email_log.cc_email }}</p>
-        <p><strong>Body:</strong> {{ latest_email_log.body | safe }}</p>
-    </div>
-{% endif %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function updateTemplateAndSubject() {
@@ -360,6 +386,11 @@
     // Event listener for checkbox, move together with others later
     document.getElementById('hide-options').addEventListener('change', toggleFormVisibility);
 
+    // Function to toggle Quick Tools section
+    function toggleQuickTools() {
+        var quickToolsContent = document.querySelector('.quick-tools-content');
+        quickToolsContent.style.display = quickToolsContent.style.display === 'none' ? 'block' : 'none';
+    }
 
     function getCSRF(name) {
         let cookieValue = null;
