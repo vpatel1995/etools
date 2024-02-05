@@ -126,6 +126,7 @@
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 20px;
         margin: 20px;
+        grid-auto-rows: minmax(100px, auto);
     }
 
     .bubble {
@@ -133,6 +134,7 @@
         border: 1px solid #ccc;
         border-radius: 8px;
         background-color: #eef;
+        transition: all 0.3s ease-in-out; /* Optional: for smooth transition */
     }
 
     .bubble-header {
@@ -145,28 +147,11 @@
         margin-top: 10px;
     }
 
-    .quick-tools {
-        margin: 20px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        background-color: #eef;
-    }
-
-    .quick-tools-header {
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    .quick-tools-content {
-        display: none; /* Initially hidden */
-        margin-top: 10px;
-    }
 </style>
 <div class="bubble-container">
-    <div class="bubble quick-tools">
+    <div class="bubble" id="quick-tools">
         <div class="bubble-header" onclick="toggleBubble('quick-tools')">Quick Tools</div>
-        <div class="bubble-content quick-tools-content">
+        <div class="bubble-content">
             <!-- Your existing email templator and other tools here -->
             <div class="email-container">
                 <div class="form-section">
@@ -231,16 +216,18 @@
         </div>
     </div>
 
-    <div class="bubble temp-name-1">
+    <!-- Additional Bubbles -->
+    <div class="bubble" id="temp-name-1">
         <div class="bubble-header" onclick="toggleBubble('temp-name-1')">Temp Name 1</div>
-        <div class="bubble-content temp-name-1-content">
+        <div class="bubble-content">
             <p><strong>Testing bubble 1</strong></p>
         </div>
     </div>
 
-    <div class="bubble temp-name-2">
+    <!-- Additional Bubbles -->
+    <div class="bubble" id="temp-name-2">
         <div class="bubble-header" onclick="toggleBubble('temp-name-2')">Temp Name 2</div>
-        <div class="bubble-content temp-name-2-content">
+        <div class="bubble-content">
             <p><strong>Testing bubble 2</strong></p>
         </div>
     </div>
@@ -428,8 +415,18 @@
     document.getElementById('hide-options').addEventListener('change', toggleFormVisibility);
 
     function toggleBubble(bubbleId) {
-        var bubbleContent = document.querySelector('.' + bubbleId + '-content');
-        bubbleContent.style.display = bubbleContent.style.display === 'none' ? 'block' : 'none';
+        var bubble = document.getElementById(bubbleId);
+        var content = bubble.querySelector('.bubble-content');
+        var isVisible = content.style.display === 'block';
+
+        // Collapse all bubbles
+        var allBubbles = document.querySelectorAll('.bubble .bubble-content');
+        allBubbles.forEach(function(bub) {
+            bub.style.display = 'none';
+        });
+
+        // Toggle the clicked bubble
+        content.style.display = isVisible ? 'none' : 'block';
     }
 
     function getCSRF(name) {
