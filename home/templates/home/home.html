@@ -217,20 +217,11 @@
 <div class="bubble-container">
     <div class="bubble" id="quick-tools">
         <div class="bubble-header" onclick="toggleBubble('quick-tools')">Quick Tools (Click To Expand)</div>
-        <div class="bubble-overview">
-            <ul class="bubble-tool-list">
-                <li>
-                    <span onclick="toggleEmailContent()">Email Templator</span>
-                    <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
-                </li>
-                <li>
-                    <span onclick="toggleDummyContent()">Dummy Tool 2</span>
-                    <button onclick="dummyAction()" class="quick-action-button">Perform Action</button>
-                </li>
-            </ul>
-        </div>
+
         <div class="bubble-content">
-            <div id="email-templator-content">
+            <!-- Email Templator Section -->
+            <div class="section-header" onclick="toggleSection('email-templator-content')">Email Templator</div>
+            <div id="email-templator-content" style="display:none;">
                 <!-- Existing email templator and other tools here -->
                 <div class="email-container">
                     <div class="form-section">
@@ -272,13 +263,15 @@
                             <div id="template-preview" contenteditable="true"></div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
-            <!-- Dummy Tool Content -->
-            <div id="dummy-tool-content" style="display: none;">
-                <!-- Content for Dummy Tool 2 -->
-                <p>Dummy tool content goes here...</p>
+
+            <!-- Dummy Tool 2 Section -->
+            <div class="section-header" onclick="toggleSection('dummy-tool-content')">Dummy Tool 2</div>
+            <div id="dummy-tool-content" style="display:none;">
+                <button onclick="dummyAction()" class="quick-action-button">Perform Action</button>
             </div>
+
             <!-- Checkbox for toggling the visibility of the email log -->
             <div class="form-group toggle-log">
                 <input type="checkbox" id="toggle-email-log" name="toggle-email-log">
