@@ -336,7 +336,7 @@
                 if (data.content) {
                     // Replace placeholders with empty strings or default values
                     let templateContent = data.content.replace(/\{\{(\w+)\}\}/g, function(match, p1){
-                        return ''; // Replace with default value if needed, else just an empty string
+                        return '';
                     });
                     document.getElementById("template-preview").innerHTML = templateContent;
                     generateInputFields(data.content);
