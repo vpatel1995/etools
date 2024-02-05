@@ -231,13 +231,13 @@
             </div>
         </div>
         <div class="bubble-content">
+            <div class="email-templator-container">
+                <span class="email-templator-text">Email Templator</span>
+                {% csrf_token %}
+                <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
+            </div>
             <!-- Existing email templator and other tools here -->
             <div class="email-container">
-                <div class="email-templator-container">
-                    <span class="email-templator-text">Email Templator</span>
-                    {% csrf_token %}
-                    <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
-                </div>
                 <div class="form-section">
                     <div class="left-section">
                         <div class="section-header">Email Templator</div>
