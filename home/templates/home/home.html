@@ -211,21 +211,21 @@
                     </div>
                 </div>
                 
-                <!-- Checkbox for toggling the visibility of the email log -->
-                <div class="form-group toggle-log">
-                    <input type="checkbox" id="toggle-email-log" name="toggle-email-log">
-                    <label for="toggle-email-log">Show Latest Email Log</label>
+            <!-- Checkbox for toggling the visibility of the email log -->
+            <div class="form-group toggle-log">
+                <input type="checkbox" id="toggle-email-log" name="toggle-email-log">
+                <label for="toggle-email-log">Show Latest Email Log</label>
+            </div>
+            {% if latest_email_log %}
+                <div class="email-log">
+                    <h3>Latest Email Sent</h3>
+                    <p><strong>Subject:</strong> {{ latest_email_log.subject }}</p>
+                    <p><strong>To:</strong> {{ latest_email_log.to_email }}</p>
+                    <p><strong>From:</strong> {{ latest_email_log.from_email }}</p>
+                    <p><strong>CC:</strong> {{ latest_email_log.cc_email }}</p>
+                    <p><strong>Body:</strong> {{ latest_email_log.body | safe }}</p>
                 </div>
-                {% if latest_email_log %}
-                    <div class="email-log">
-                        <h3>Latest Email Sent</h3>
-                        <p><strong>Subject:</strong> {{ latest_email_log.subject }}</p>
-                        <p><strong>To:</strong> {{ latest_email_log.to_email }}</p>
-                        <p><strong>From:</strong> {{ latest_email_log.from_email }}</p>
-                        <p><strong>CC:</strong> {{ latest_email_log.cc_email }}</p>
-                        <p><strong>Body:</strong> {{ latest_email_log.body | safe }}</p>
-                    </div>
-                {% endif %}
+            {% endif %}
                 
             </div>
         </div>
