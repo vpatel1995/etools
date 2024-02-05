@@ -357,7 +357,6 @@
         var allBubbles = document.querySelectorAll('.bubble');
         var bubbleContainer = document.querySelector('.bubble-container');
         var bubble = document.getElementById(bubbleId);
-        var bubbleHeader = document.querySelector('.bubble-header');
 
         // Restore initial order before any toggling
         restoreInitialBubbleOrder();
@@ -369,22 +368,6 @@
                 bubble.querySelector('.bubble-content').classList.remove('bubble-content-expanded');
             }
         });
-
-        // Toggle the 'expanded' class on the clicked bubble
-        bubble.classList.toggle('bubble-expanded');
-        bubble.querySelector('.bubble-content').classList.toggle('bubble-content-expanded');
-
-        // Hide the bubble header if 'quick-tools' is expanded
-        if (bubbleId === 'quick-tools') {
-            bubbleHeader.style.display = bubble.classList.contains('bubble-expanded') ? 'none' : 'block';
-        }
-
-        // If the bubble is now expanded, move it to the first position
-        if (bubble.classList.contains('bubble-expanded')) {
-            bubbleContainer.insertBefore(bubble, bubbleContainer.firstChild);
-        }
-    }
-
 
         // Toggle the 'expanded' class on the clicked bubble
         bubble.classList.toggle('bubble-expanded');
