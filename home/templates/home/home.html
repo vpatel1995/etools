@@ -183,14 +183,6 @@
         background-color: #218838;
     }
 
-    .email-log-link span {
-        cursor: pointer;
-        color: #007bff;
-        text-decoration: underline;
-    }
-
-    
-
 </style>
 <div class="bubble-container">
     <div class="bubble" id="quick-tools">
@@ -200,9 +192,6 @@
                 <span class="email-templator-text">Email Templator</span>
                 {% csrf_token %}
                 <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
-            </div>
-            <div class="email-log-link">
-                <span>Email Log</span>
             </div>
         </div>
         <div class="bubble-content">
