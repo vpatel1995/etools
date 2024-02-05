@@ -218,7 +218,7 @@
     <div class="bubble" id="quick-tools">
         <div class="bubble-header" onclick="toggleBubble('quick-tools')">Quick Tools (Click To Expand)</div>
         <div class="bubble-overview">
-            <div class="bubble-header-container">
+            <div class="toggle-header">
                 <div class="email-templator-container">
                     <span class="email-templator-text">Email Templator</span>
                     {% csrf_token %}
@@ -371,6 +371,16 @@
             if (bubble.id !== bubbleId) {
                 bubble.classList.remove('bubble-expanded');
                 bubble.querySelector('.bubble-content').classList.remove('bubble-content-expanded');
+                // Ensure headers of other bubbles are visible
+                var otherHeader = bubble.querySelector('.bubble-header');
+                if (otherHeader) {
+                    otherHeader.style.display = 'block';
+                }
+                // Ensure toggle-headers of other bubbles are visible
+                var otherToggleHeader = bubble.querySelector('.toggle-header');
+                if (otherToggleHeader) {
+                    otherToggleHeader.style.display = 'block';
+                }
             }
         });
 
@@ -378,11 +388,24 @@
         bubble.classList.toggle('bubble-expanded');
         bubble.querySelector('.bubble-content').classList.toggle('bubble-content-expanded');
 
+        // Toggle visibility of the bubble header
+        var bubbleHeader = bubble.querySelector('.bubble-header');
+        if (bubbleHeader) {
+            bubbleHeader.style.display = bubble.classList.contains('bubble-expanded') ? 'none' : 'block';
+        }
+
+        // Toggle visibility of the toggle-header
+        var toggleHeader = bubble.querySelector('.toggle-header');
+        if (toggleHeader) {
+            toggleHeader.style.display = bubble.classList.contains('bubble-expanded') ? 'none' : 'block';
+        }
+
         // If the bubble is now expanded, move it to the first position
         if (bubble.classList.contains('bubble-expanded')) {
             bubbleContainer.insertBefore(bubble, bubbleContainer.firstChild);
         }
     }
+
 
     function toggleEmailLogVisibility() {
         var isLogVisible = document.getElementById('toggle-email-log').checked;
