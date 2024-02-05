@@ -218,7 +218,7 @@
     <div class="bubble" id="quick-tools">
         <div class="bubble-header" onclick="toggleBubble('quick-tools')">Quick Tools (Click To Expand)</div>
         <div class="bubble-overview">
-            <div class="bubble-header">
+            <div class="bubble-header-container">
                 <div class="email-templator-container">
                     <span class="email-templator-text">Email Templator</span>
                     {% csrf_token %}
@@ -362,17 +362,39 @@
         var allBubbles = document.querySelectorAll('.bubble');
         var bubbleContainer = document.querySelector('.bubble-container');
         var bubble = document.getElementById(bubbleId);
+        var bubbleHeader = bubble.querySelector('.bubble-header');
 
         // Restore initial order before any toggling
         restoreInitialBubbleOrder();
 
         // Remove 'expanded' class from all bubbles except the clicked one
-        allBubbles.forEach(function(bubble) {
-            if (bubble.id !== bubbleId) {
-                bubble.classList.remove('bubble-expanded');
-                bubble.querySelector('.bubble-content').classList.remove('bubble-content-expanded');
+        allBubbles.forEach(function(otherBubble) {
+            if (otherBubble.id !== bubbleId) {
+                otherBubble.classList.remove('bubble-expanded');
+                otherBubble.querySelector('.bubble-content').classList.remove('bubble-content-expanded');
+                // Make sure headers of other bubbles are visible
+                var otherHeader = otherBubble.querySelector('.bubble-header');
+                if (otherHeader) {
+                    otherHeader.style.display = 'block';
+                }
             }
         });
+
+        // Toggle the 'expanded' class on the clicked bubble
+        bubble.classList.toggle('bubble-expanded');
+        bubble.querySelector('.bubble-content').classList.toggle('bubble-content-expanded');
+
+        // Toggle visibility of the bubble header
+        if (bubbleHeader) {
+            bubbleHeader.style.display = bubble.classList.contains('bubble-expanded') ? 'none' : 'block';
+        }
+
+        // If the bubble is now expanded, move it to the first position
+        if (bubble.classList.contains('bubble-expanded')) {
+            bubbleContainer.insertBefore(bubble, bubbleContainer.firstChild);
+        }
+    }
+
 
         // Toggle the 'expanded' class on the clicked bubble
         bubble.classList.toggle('bubble-expanded');
