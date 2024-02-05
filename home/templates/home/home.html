@@ -147,6 +147,15 @@
         margin-top: 10px;
     }
 
+    .bubble-expanded {
+        grid-column: 1 / -1; /* Span the bubble across all columns */
+        transition: all 0.3s ease-in-out;
+    }
+
+    .bubble-content-expanded {
+        display: block; /* Show content when expanded */
+    }
+
 </style>
 <div class="bubble-container">
     <div class="bubble" id="quick-tools">
@@ -415,17 +424,22 @@
     document.getElementById('hide-options').addEventListener('change', toggleFormVisibility);
     
     function toggleBubble(bubbleId) {
-        var bubbleContent = document.getElementById(bubbleId).querySelector('.bubble-content');
-        var isContentVisible = bubbleContent.style.display === 'block';
+        var bubble = document.getElementById(bubbleId);
+        var bubbleContent = bubble.querySelector('.bubble-content');
+        var isContentVisible = bubble.classList.contains('bubble-expanded');
 
-        // Hide all bubble contents
-        var allBubbleContents = document.querySelectorAll('.bubble .bubble-content');
-        allBubbleContents.forEach(function(content) {
-            content.style.display = 'none';
+        // Hide all bubble contents and remove expanded class
+        var allBubbles = document.querySelectorAll('.bubble');
+        allBubbles.forEach(function(bubble) {
+            bubble.classList.remove('bubble-expanded');
+            bubble.querySelector('.bubble-content').classList.remove('bubble-content-expanded');
         });
 
-        // Toggle visibility of the clicked bubble's content
-        bubbleContent.style.display = isContentVisible ? 'none' : 'block';
+        // Toggle visibility and class of the clicked bubble
+        if (!isContentVisible) {
+            bubble.classList.add('bubble-expanded');
+            bubbleContent.classList.add('bubble-content-expanded');
+        }
     }
 
     function getCSRF(name) {
