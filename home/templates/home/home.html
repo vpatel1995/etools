@@ -425,6 +425,10 @@
     
     function toggleBubble(bubbleId) {
         var allBubbles = document.querySelectorAll('.bubble');
+        var bubbleContainer = document.querySelector('.bubble-container');
+        var bubble = document.getElementById(bubbleId);
+
+        // Remove 'expanded' class from all bubbles except the clicked one
         allBubbles.forEach(function(bubble) {
             if (bubble.id !== bubbleId) {
                 bubble.classList.remove('bubble-expanded');
@@ -432,10 +436,14 @@
             }
         });
 
-        var bubble = document.getElementById(bubbleId);
-        var bubbleContent = bubble.querySelector('.bubble-content');
+        // Toggle the 'expanded' class on the clicked bubble
         bubble.classList.toggle('bubble-expanded');
-        bubbleContent.classList.toggle('bubble-content-expanded');
+        bubble.querySelector('.bubble-content').classList.toggle('bubble-content-expanded');
+
+        // If the bubble is now expanded, move it to the first position
+        if (bubble.classList.contains('bubble-expanded')) {
+            bubbleContainer.insertBefore(bubble, bubbleContainer.firstChild);
+        }
     }
 
     function getCSRF(name) {
