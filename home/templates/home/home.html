@@ -184,14 +184,6 @@
     }
 
 
-    .tool-preview {
-        margin-bottom: 10px;
-    }
-
-    .tool-preview span {
-        margin-right: 10px;
-    }
-
 
 
 
@@ -211,19 +203,21 @@
 <div class="bubble-container">
     <div class="bubble" id="quick-tools">
         <div class="bubble-header" onclick="toggleBubble('quick-tools')">Quick Tools (Click To Expand)</div>
-        <!-- Bubble Overview (Visible when unexpanded) -->
         <div class="bubble-overview">
-            <div class="tool-preview">
-                <span>Email Templator</span>
+            <div class="email-templator-container">
+                <span class="email-templator-text">Email Templator</span>
+                {% csrf_token %}
                 <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
             </div>
-            <div class="tool-preview">
-                <span>Dummy Tool 2</span>
+            <!-- 
+            <div class="dummy-tool-container">
+                <span class="dummy-tool-text">Dummy Tool 2</span>
                 <button onclick="dummyAction()" class="quick-action-button">Perform Action</button>
             </div>
+            -->
         </div>
-        <!-- Bubble Content (Visible when expanded) -->
         <div class="bubble-content">
+            <!-- Your existing email templator and other tools here -->
             <div class="email-container">
                 <div class="form-section">
                     <div class="left-section">
@@ -264,11 +258,7 @@
                         <div id="template-preview" contenteditable="true"></div>
                     </div>
                 </div>
-            </div>
-            <!-- Dummy Tool 2 Detailed Content -->
-            <div>
-                <p>Detailed content or functionality for Dummy Tool 2</p>
-            </div>
+            </div>    
             <!-- Checkbox for toggling the visibility of the email log -->
             <div class="form-group toggle-log">
                 <input type="checkbox" id="toggle-email-log" name="toggle-email-log">
@@ -309,7 +299,7 @@
     // Remove later
     function dummyAction() {
         console.log("Dummy action performed");
-        alert('alert');
+        alert('Template not found')
     }
 
     // Utility Functions
