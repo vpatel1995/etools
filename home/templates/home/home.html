@@ -424,22 +424,18 @@
     document.getElementById('hide-options').addEventListener('change', toggleFormVisibility);
     
     function toggleBubble(bubbleId) {
-        var bubble = document.getElementById(bubbleId);
-        var bubbleContent = bubble.querySelector('.bubble-content');
-        var isContentVisible = bubble.classList.contains('bubble-expanded');
-
-        // Hide all bubble contents and remove expanded class
         var allBubbles = document.querySelectorAll('.bubble');
         allBubbles.forEach(function(bubble) {
-            bubble.classList.remove('bubble-expanded');
-            bubble.querySelector('.bubble-content').classList.remove('bubble-content-expanded');
+            if (bubble.id !== bubbleId) {
+                bubble.classList.remove('bubble-expanded');
+                bubble.querySelector('.bubble-content').classList.remove('bubble-content-expanded');
+            }
         });
 
-        // Toggle visibility and class of the clicked bubble
-        if (!isContentVisible) {
-            bubble.classList.add('bubble-expanded');
-            bubbleContent.classList.add('bubble-content-expanded');
-        }
+        var bubble = document.getElementById(bubbleId);
+        var bubbleContent = bubble.querySelector('.bubble-content');
+        bubble.classList.toggle('bubble-expanded');
+        bubbleContent.classList.toggle('bubble-content-expanded');
     }
 
     function getCSRF(name) {
