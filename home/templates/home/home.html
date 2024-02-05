@@ -183,7 +183,21 @@
         background-color: #218838;
     }
 
+    .bubble-tool-list {
+        margin-bottom: 10px;
+        list-style-type: none;
+        padding: 0;
+    }
 
+    .bubble-tool-list li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    .bubble-tool-list li span {
+        margin-right: 10px;
+    }
 
 
 
@@ -204,20 +218,19 @@
     <div class="bubble" id="quick-tools">
         <div class="bubble-header" onclick="toggleBubble('quick-tools')">Quick Tools (Click To Expand)</div>
         <div class="bubble-overview">
-            <div class="email-templator-container">
-                <span class="email-templator-text">Email Templator</span>
-                {% csrf_token %}
-                <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
-            </div>
-            <!-- 
-            <div class="dummy-tool-container">
-                <span class="dummy-tool-text">Dummy Tool 2</span>
-                <button onclick="dummyAction()" class="quick-action-button">Perform Action</button>
-            </div>
-            -->
+            <ul class="bubble-tool-list">
+                <li>
+                    <span>Email Templator</span>
+                    <button onclick="sendEmail(true)" class="quick-action-button">Send Email</button>
+                </li>
+                <li>
+                    <span>Dummy Tool 2</span>
+                    <button onclick="dummyAction()" class="quick-action-button">Perform Action</button>
+                </li>
+            </ul>
         </div>
         <div class="bubble-content">
-            <!-- Your existing email templator and other tools here -->
+            <!-- Existing email templator and other tools here -->
             <div class="email-container">
                 <div class="form-section">
                     <div class="left-section">
